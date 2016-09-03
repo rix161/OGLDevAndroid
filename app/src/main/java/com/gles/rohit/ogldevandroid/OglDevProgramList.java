@@ -14,6 +14,7 @@ import com.gles.rohit.Tutorial2.Tutorial2;
 import com.gles.rohit.Tutorial3.Tutorial3;
 import com.gles.rohit.Tutorial4.Tutorial4;
 import com.gles.rohit.Tutorial5.Tutorial5;
+import com.gles.rohit.Tutorial6.Tutorial6;
 
 import java.util.zip.Inflater;
 
@@ -72,6 +73,11 @@ public class OglDevProgramList extends ArrayAdapter<String> {
                 intent = new Intent(mContext, Tutorial5.class);
                 mContext.startActivity(intent);
                 break;
+            case 5:
+                intent = new Intent(mContext, Tutorial6.class);
+                mContext.startActivity(intent);
+                break;
+
             default:
                 Toast.makeText(mContext,"Invalid Selection",Toast.LENGTH_SHORT).show();
         }
