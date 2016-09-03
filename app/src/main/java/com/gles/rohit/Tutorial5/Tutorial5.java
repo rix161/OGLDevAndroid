@@ -1,4 +1,4 @@
-package com.gles.rohit.Tutorial4;
+package com.gles.rohit.Tutorial5;
 
 import android.app.Activity;
 import android.opengl.GLSurfaceView;
@@ -6,16 +6,16 @@ import android.os.Bundle;
 
 import com.gles.rohit.ogldevandroid.R;
 
-public class Tutorial4 extends Activity {
+public class Tutorial5 extends Activity {
 
     GLSurfaceView mSurfaceView;
-    myRenderer4 myRenderer;
+    myRenderer5 myRenderer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSurfaceView = new GLSurfaceView(this);
         mSurfaceView.setEGLContextClientVersion(2);
-        myRenderer = new myRenderer4(getApplicationContext());
+        myRenderer = new myRenderer5(getApplicationContext());
         mSurfaceView.setRenderer(myRenderer);
         setContentView(mSurfaceView);
     }

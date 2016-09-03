@@ -1,4 +1,4 @@
-package com.gles.rohit.Tutorial4;
+package com.gles.rohit.Tutorial5;
 
 import android.content.Context;
 import android.opengl.GLES20;
@@ -19,7 +19,7 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Created by Rohith on 03-09-2016.
  */
-public class myRenderer4 implements GLSurfaceView.Renderer {
+public class myRenderer5 implements GLSurfaceView.Renderer {
     private Context mContext;
     private final float triangleData[] = {
             -1.0f,-1.0f,0.0f,
@@ -33,7 +33,6 @@ public class myRenderer4 implements GLSurfaceView.Renderer {
     private final String TAG = "GFX:";
 
     private FloatBuffer mVertexBuffer;
-    private FloatBuffer mColorBuffer;
 
     private int mVShaderId;
     private int mFShaderId;
@@ -41,6 +40,7 @@ public class myRenderer4 implements GLSurfaceView.Renderer {
 
     private int mVertexDataHandle;
     private int mColorDataHandle;
+    private int mScaleHandle;
 
     private int[] mVbo;
     private int numberOfVBOS = 1;
@@ -49,7 +49,8 @@ public class myRenderer4 implements GLSurfaceView.Renderer {
     private int mVextexColorSize = 4;
     private int mStride = 7 *4;
 
-    public myRenderer4(Context applicationContext) {
+    static float mScale = 0;
+    public myRenderer5(Context applicationContext) {
         mContext = applicationContext;
         mVertexBuffer = ByteBuffer.allocateDirect(triangleData.length*4).order(ByteOrder.nativeOrder()).asFloatBuffer();
         mVertexBuffer.put(triangleData).position(0);
@@ -59,7 +60,7 @@ public class myRenderer4 implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
 
-        mVShaderId = ShaderHelper.generateShader(GLES20.GL_VERTEX_SHADER, FileReader.readTextFileFromRawResource(mContext, R.raw.tutorial4vs));
+        mVShaderId = ShaderHelper.generateShader(GLES20.GL_VERTEX_SHADER, FileReader.readTextFileFromRawResource(mContext, R.raw.tutorial5vs));
         mFShaderId = ShaderHelper.generateShader(GLES20.GL_FRAGMENT_SHADER, FileReader.readTextFileFromRawResource(mContext,R.raw.tutorial2fs));
         if(mVShaderId == -1 || mFShaderId == -1){
             Log.e(TAG,"Something is wrong with shaders");
@@ -70,6 +71,7 @@ public class myRenderer4 implements GLSurfaceView.Renderer {
 
         mVertexDataHandle = GLES20.glGetAttribLocation(mProgramId,"aPosition");
         mColorDataHandle = GLES20.glGetAttribLocation(mProgramId,"aColor");
+        mScaleHandle = GLES20.glGetUniformLocation(mProgramId,"uScale");
 
         GLES20.glGenBuffers(1,mVbo,0);
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER,mVbo[0]);
@@ -86,6 +88,9 @@ public class myRenderer4 implements GLSurfaceView.Renderer {
     public void onDrawFrame(GL10 gl10) {
         GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
         GLES20.glUseProgram(mProgramId);
+
+        mScale =mScale+0.01f;
+        GLES20.glUniform1f(mScaleHandle,Math.abs((float)Math.sin(mScale)));
 
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER,mVbo[0]);
         GLES20.glEnableVertexAttribArray(mVertexDataHandle);

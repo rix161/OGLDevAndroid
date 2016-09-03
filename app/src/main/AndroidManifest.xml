@@ -18,7 +18,8 @@
         <activity android:name="com.gles.rohit.Tutorial1.Tutorial1" />
         <activity android:name="com.gles.rohit.Tutorial2.Tutorial2" />
         <activity android:name="com.gles.rohit.Tutorial3.Tutorial3" />
-        <activity android:name="com.gles.rohit.tutorial4.Tutorial4"></activity>
+        <activity android:name="com.gles.rohit.Tutorial4.Tutorial4" />
+        <activity android:name="com.gles.rohit.Tutorial5.Tutorial5"></activity>
     </application>
 
 </manifest>
