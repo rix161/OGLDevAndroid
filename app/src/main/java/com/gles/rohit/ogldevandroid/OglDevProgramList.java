@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.gles.rohit.Tutorial1.Tutorial1;
 import com.gles.rohit.Tutorial2.Tutorial2;
 import com.gles.rohit.Tutorial3.Tutorial3;
+import com.gles.rohit.tutorial4.Tutorial4;
 
 import java.util.zip.Inflater;
 
@@ -59,6 +60,11 @@ public class OglDevProgramList extends ArrayAdapter<String> {
 
             case 2:
                 intent = new Intent(mContext, Tutorial3.class);
+                mContext.startActivity(intent);
+                break;
+
+            case 3:
+                intent = new Intent(mContext, Tutorial4.class);
                 mContext.startActivity(intent);
                 break;
             default:
