@@ -1,0 +1,10 @@
+<resources>
+    <string-array name="OglDevPgmNames">
+        <item>Tutorial 1: Open a window</item>
+        <item>Tutorial 2: Hello dot!</item>
+        <item>Tutorial 3: First triangle</item>
+        <item>Tutorial 4: Shaders</item>
+        <item>Tutorial 5: Uniform variables</item>
+
+    </string-array>
+</resources>
