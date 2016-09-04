@@ -1,4 +1,4 @@
-package com.gles.rohit.Tutorial6;
+package com.gles.rohit.Tutorial8;
 
 import android.content.Context;
 
@@ -21,7 +21,7 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Created by Rohith on 03-09-2016.
  */
-public class myRenderer6 implements GLSurfaceView.Renderer {
+public class myRenderer8 implements GLSurfaceView.Renderer {
     private Context mContext;
     private final float triangleData[] = {
             -1.0f,-1.0f,0.0f,
@@ -53,10 +53,10 @@ public class myRenderer6 implements GLSurfaceView.Renderer {
 
     private float []mMatrix = new float[16];
 
-    static float mScale = 0;
+    static float mScale = 0.0f;
     Boolean doIncrement = true;
 
-    public myRenderer6(Context applicationContext) {
+    public myRenderer8(Context applicationContext) {
         mContext = applicationContext;
         mVertexBuffer = ByteBuffer.allocateDirect(triangleData.length*4).order(ByteOrder.nativeOrder()).asFloatBuffer();
         mVertexBuffer.put(triangleData).position(0);
@@ -94,11 +94,12 @@ public class myRenderer6 implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl10) {
+
         GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
         GLES20.glUseProgram(mProgramId);
 
         Matrix.setIdentityM(mMatrix,0);
-        Matrix.translateM(mMatrix,0,mScale,0.0f,0.0f);
+        Matrix.scaleM(mMatrix,0,mScale,mScale,mScale);
         GLES20.glUniformMatrix4fv(mMMatrixHandle,1,false,mMatrix,0);
         updateScale();
 
@@ -115,10 +116,10 @@ public class myRenderer6 implements GLSurfaceView.Renderer {
     }
 
     private void updateScale() {
-        if(doIncrement && mScale > 1){
+        if(doIncrement && mScale > 2){
             doIncrement = false;
         }
-        else if(!doIncrement && mScale < -1) {
+        else if(!doIncrement && mScale < 0) {
             doIncrement = true;
         }
 

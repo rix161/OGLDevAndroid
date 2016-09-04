@@ -1,4 +1,4 @@
-package com.gles.rohit.Tutorial6;
+package com.gles.rohit.Tutorial9;
 
 import android.content.Context;
 
@@ -21,7 +21,7 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Created by Rohith on 03-09-2016.
  */
-public class myRenderer6 implements GLSurfaceView.Renderer {
+public class myRenderer9 implements GLSurfaceView.Renderer {
     private Context mContext;
     private final float triangleData[] = {
             -1.0f,-1.0f,0.0f,
@@ -41,8 +41,7 @@ public class myRenderer6 implements GLSurfaceView.Renderer {
     private int mProgramId;
 
     private int mVertexDataHandle;
-    private int mColorDataHandle;
-    private int mMMatrixHandle;
+   private int mMMatrixHandle;
 
     private int[] mVbo;
     private int numberOfVBOS = 1;
@@ -53,10 +52,10 @@ public class myRenderer6 implements GLSurfaceView.Renderer {
 
     private float []mMatrix = new float[16];
 
-    static float mScale = 0;
+    static float mScale = 0.0f;
     Boolean doIncrement = true;
 
-    public myRenderer6(Context applicationContext) {
+    public myRenderer9(Context applicationContext) {
         mContext = applicationContext;
         mVertexBuffer = ByteBuffer.allocateDirect(triangleData.length*4).order(ByteOrder.nativeOrder()).asFloatBuffer();
         mVertexBuffer.put(triangleData).position(0);
@@ -66,7 +65,7 @@ public class myRenderer6 implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
 
-        mVShaderId = ShaderHelper.generateShader(GLES20.GL_VERTEX_SHADER, FileReader.readTextFileFromRawResource(mContext, R.raw.tutorial6vs));
+        mVShaderId = ShaderHelper.generateShader(GLES20.GL_VERTEX_SHADER, FileReader.readTextFileFromRawResource(mContext, R.raw.tutorial9vs));
         mFShaderId = ShaderHelper.generateShader(GLES20.GL_FRAGMENT_SHADER, FileReader.readTextFileFromRawResource(mContext,R.raw.tutorial2fs));
         if(mVShaderId == -1 || mFShaderId == -1){
             Log.e(TAG,"Something is wrong with shaders");
@@ -76,7 +75,6 @@ public class myRenderer6 implements GLSurfaceView.Renderer {
         GLES20.glUseProgram(mProgramId);
 
         mVertexDataHandle = GLES20.glGetAttribLocation(mProgramId,"aPosition");
-        mColorDataHandle = GLES20.glGetAttribLocation(mProgramId,"aColor");
         mMMatrixHandle = GLES20.glGetUniformLocation(mProgramId,"uMMatrix");
 
         GLES20.glGenBuffers(1,mVbo,0);
@@ -94,31 +92,26 @@ public class myRenderer6 implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl10) {
+
         GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
         GLES20.glUseProgram(mProgramId);
 
         Matrix.setIdentityM(mMatrix,0);
-        Matrix.translateM(mMatrix,0,mScale,0.0f,0.0f);
         GLES20.glUniformMatrix4fv(mMMatrixHandle,1,false,mMatrix,0);
-        updateScale();
 
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER,mVbo[0]);
         GLES20.glEnableVertexAttribArray(mVertexDataHandle);
         GLES20.glVertexAttribPointer(mVertexDataHandle,mVextexDataSize,GLES20.GL_FLOAT,false,mStride,0);
-
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER,mVbo[0]);
-        GLES20.glEnableVertexAttribArray(mColorDataHandle);
-        GLES20.glVertexAttribPointer(mColorDataHandle,mVextexColorSize,GLES20.GL_FLOAT,false,mStride,mVextexDataSize*4);
 
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES,0,3);
 
     }
 
     private void updateScale() {
-        if(doIncrement && mScale > 1){
+        if(doIncrement && mScale > 2){
             doIncrement = false;
         }
-        else if(!doIncrement && mScale < -1) {
+        else if(!doIncrement && mScale < 0) {
             doIncrement = true;
         }
 

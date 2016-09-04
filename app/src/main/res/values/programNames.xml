@@ -6,5 +6,8 @@
         <item>Tutorial 4: Shaders</item>
         <item>Tutorial 5: Uniform variables</item>
         <item>Tutorial 6: Translation Transformation</item>
+        <item>Tutorial 7: Rotation Transformation</item>
+        <item>Tutorial 8: Scale Transformation</item>
+        <item>Tutorial 9:Interpolation</item>
     </string-array>
 </resources>

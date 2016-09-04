@@ -15,6 +15,9 @@ import com.gles.rohit.Tutorial3.Tutorial3;
 import com.gles.rohit.Tutorial4.Tutorial4;
 import com.gles.rohit.Tutorial5.Tutorial5;
 import com.gles.rohit.Tutorial6.Tutorial6;
+import com.gles.rohit.Tutorial7.Tutorial7;
+import com.gles.rohit.Tutorial8.Tutorial8;
+import com.gles.rohit.Tutorial9.Tutorial9;
 
 import java.util.zip.Inflater;
 
@@ -75,6 +78,20 @@ public class OglDevProgramList extends ArrayAdapter<String> {
                 break;
             case 5:
                 intent = new Intent(mContext, Tutorial6.class);
+                mContext.startActivity(intent);
+                break;
+            case 6:
+                intent = new Intent(mContext, Tutorial7.class);
+                mContext.startActivity(intent);
+                break;
+
+            case 7:
+                intent = new Intent(mContext, Tutorial8.class);
+                mContext.startActivity(intent);
+                break;
+
+            case 8:
+                intent = new Intent(mContext, Tutorial9.class);
                 mContext.startActivity(intent);
                 break;
 
