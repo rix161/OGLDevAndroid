@@ -1,6 +1,7 @@
 package com.gles.rohit.Common;
 
 import android.opengl.Matrix;
+import android.util.Log;
 
 /**
  * Created by Rohith on 04-09-2016.
@@ -12,16 +13,20 @@ public class TransPipeline {
     private float []mTranslateMatrix;
     private float []mRotateMatrix;
 
+    private float []mPerspectiveMatrix;
+
     private float []mAxis;
     private float mAngle;
 
     private float []mScale;
 
     public TransPipeline(){
+
         mMatrix = new float[16];
         mScaleMatrix = new float[16];
         mTranslateMatrix = new float[16];
         mRotateMatrix = new float[16];
+        mPerspectiveMatrix = new float[16];
 
         mAxis = new float[3];
         mScale = new float[3];
@@ -29,6 +34,7 @@ public class TransPipeline {
         Matrix.setIdentityM(mScaleMatrix,0);
         Matrix.setIdentityM(mTranslateMatrix,0);
         Matrix.setIdentityM(mRotateMatrix,0);
+        Matrix.setIdentityM(mPerspectiveMatrix,0);
     }
 
     public void setScale(float []scale){
@@ -61,9 +67,15 @@ public class TransPipeline {
             translate();
         if(rotate)
             rotate();
+
         Matrix.multiplyMM(mMatrix,0,mRotateMatrix,0,mScaleMatrix,0);
         Matrix.multiplyMM(mMatrix,0,mTranslateMatrix,0,mMatrix,0);
+        Matrix.multiplyMM(mMatrix,0,mPerspectiveMatrix,0,mMatrix,0);
         return mMatrix;
+    }
+
+    public void setPerspective(float width,float height,float fov,float far,float near){
+        Matrix.perspectiveM(mPerspectiveMatrix,0,fov,(width/height),near,far);
     }
 
     public float[] getMatrix(){

@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.gles.rohit.Tutorial1.Tutorial1;
 import com.gles.rohit.Tutorial10.Tutorial10;
 import com.gles.rohit.Tutorial11.Tutorial11;
+import com.gles.rohit.Tutorial12.Tutorial12;
 import com.gles.rohit.Tutorial2.Tutorial2;
 import com.gles.rohit.Tutorial3.Tutorial3;
 import com.gles.rohit.Tutorial4.Tutorial4;
@@ -107,6 +108,10 @@ public class OglDevProgramList extends ArrayAdapter<String> {
                 mContext.startActivity(intent);
                 break;
 
+            case 11:
+                intent = new Intent(mContext, Tutorial12.class);
+                mContext.startActivity(intent);
+                break;
             default:
                 Toast.makeText(mContext,"Invalid Selection",Toast.LENGTH_SHORT).show();
         }

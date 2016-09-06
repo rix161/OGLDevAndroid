@@ -1,4 +1,4 @@
-package com.gles.rohit.Tutorial11;
+package com.gles.rohit.Tutorial12;
 
 import android.content.Context;
 
@@ -22,13 +22,13 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Created by Rohith on 03-09-2016.
  */
-public class myRenderer11 implements GLSurfaceView.Renderer {
+public class myRenderer12 implements GLSurfaceView.Renderer {
     private Context mContext;
     private final float pyramidData[] = {
-            -1.0f, -1.0f, 0.0f,
-            0.0f, -1.0f, 1.0f,
-            1.0f, -1.0f, 0.0f,
-            0.0f, 1.0f, 0.0f
+            -1.0f, -1.0f, 0.5773f,
+            0.0f, -1.0f, -1.15475f,
+            1.0f, -1.0f, 0.5773f,
+            0.0f, 1.0f, 0.0f,
     };
 
     private final int pyramidIndex[]={
@@ -56,7 +56,7 @@ public class myRenderer11 implements GLSurfaceView.Renderer {
     private int mVextexDataSize = 3;
     TransPipeline mPipeline;
 
-    public myRenderer11(Context applicationContext) {
+    public myRenderer12(Context applicationContext) {
         mContext = applicationContext;
 
         mVertexBuffer = ByteBuffer.allocateDirect(pyramidData.length*4).order(ByteOrder.nativeOrder()).asFloatBuffer();
@@ -94,14 +94,14 @@ public class myRenderer11 implements GLSurfaceView.Renderer {
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER,0);
 
         mPipeline.setRotate(1.0f,new float[]{0.0f,1.0f,0.0f});
-        mPipeline.setTranslate(new float[]{0.75f,0.0f,0.0f});
-        mPipeline.setScale(new float[]{0.5f,0.5f,0.5f});
+        mPipeline.setTranslate(new float[]{0.0f, 0.0f, -20.0f});
 
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl10, int width, int height) {
         GLES20.glViewport(0,0,width,height);
+       mPipeline.setPerspective(width,height,30.0f,100.0f,1.0f);
     }
 
     @Override
@@ -127,6 +127,6 @@ public class myRenderer11 implements GLSurfaceView.Renderer {
         GLES20.glDeleteShader(mVShaderId);
         GLES20.glDeleteShader(mFShaderId);
         GLES20.glDeleteProgram(mProgramId);
-        GLES20.glDeleteBuffers(1,mBuffers,0);
+        GLES20.glDeleteBuffers(numberOfVBOS,mBuffers,0);
     }
 }

@@ -11,5 +11,6 @@
         <item>Tutorial 09: Interpolation</item>
         <item>Tutorial 10: Indexed draws</item>
         <item>Tutorial 11: Concatenating Transformations</item>
+        <item>Tutorial 12: Perspective Projection</item>
     </string-array>
 </resources>
