@@ -27,7 +27,8 @@
         <activity android:name="com.gles.rohit.Tutorial10.Tutorial10" />
         <activity android:name="com.gles.rohit.Tutorial11.Tutorial11" />
         <activity android:name="com.gles.rohit.Tutorial12.Tutorial12" />
-        <activity android:name="com.gles.rohit.Tutorial13.Tutorial13"></activity>
+        <activity android:name="com.gles.rohit.Tutorial13.Tutorial13" />
+        <activity android:name="com.gles.rohit.Tutorial14.Tutorial14"></activity>
     </application>
 
 </manifest>
