@@ -95,7 +95,7 @@ public class myRenderer11 implements GLSurfaceView.Renderer {
 
         mPipeline.setRotate(1.0f,new float[]{0.0f,1.0f,0.0f});
         mPipeline.setTranslate(new float[]{0.0f,0.0f,0.0f});
-        mPipeline.setScale(new float[]{1.0f,1.0f,1.0f});
+        mPipeline.setScale(new float[]{0.5f,0.5f,0.5f});
 
     }
 

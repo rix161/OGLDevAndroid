@@ -94,7 +94,7 @@ public class myRenderer12 implements GLSurfaceView.Renderer {
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER,0);
 
         mPipeline.setRotate(1.0f,new float[]{0.0f,1.0f,0.0f});
-        mPipeline.setTranslate(new float[]{0.0f, 0.0f, -20.0f});
+        mPipeline.setTranslate(new float[]{0.0f, 0.0f, -10.0f});
 
     }
 

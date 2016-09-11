@@ -54,7 +54,6 @@ public class TransPipeline {
     public void setTranslate(float []translate){
         mTranslate = translate;
         Matrix.translateM(mTranslateMatrix,0,mTranslate[0],mTranslate[1],mTranslate[2]);
-
         if(DEBUG)
             printMatrix(mTranslateMatrix,"SetTranslate");
     }
@@ -78,26 +77,31 @@ public class TransPipeline {
     }
 
     public float[] getMatrix(boolean scale,boolean translate,boolean rotate){
+        Matrix.setIdentityM(mMatrix,0);
         if(translate)
             translate();
         if(rotate)
             rotate();
 
-          Matrix.multiplyMM(mMatrix,0,mRotateMatrix,0,mScaleMatrix,0);
-          Matrix.multiplyMM(mMatrix,0,mTranslateMatrix,0,mMatrix,0);
-          Matrix.multiplyMM(mMatrix,0,mCameraMatrix,0,mMatrix,0);
-          Matrix.multiplyMM(mMatrix,0,mPerspectiveMatrix,0,mMatrix,0);
+        Matrix.multiplyMM(mMatrix,0,mScaleMatrix,0,mMatrix,0);
+        Matrix.multiplyMM(mMatrix,0,mRotateMatrix,0,mMatrix,0);
+        Matrix.multiplyMM(mMatrix,0,mTranslateMatrix,0,mMatrix,0);
+        Matrix.multiplyMM(mMatrix,0,mCameraMatrix,0,mMatrix,0);
+        Matrix.multiplyMM(mMatrix,0,mPerspectiveMatrix,0,mMatrix,0);
 
         return mMatrix;
     }
 
     public void setPerspective(float width,float height,float fov,float far,float near){
         Matrix.perspectiveM(mPerspectiveMatrix,0,fov,(width/height),near,far);
-        printMatrix(mPerspectiveMatrix,"setPerspective");
+        if(DEBUG)
+            printMatrix(mPerspectiveMatrix,"setPerspective");
     }
 
-    public void setCamera(float []eye,float []up,float []lookat){
-        Matrix.setLookAtM(mCameraMatrix,0,eye[0],eye[1],eye[2],up[0],up[1],up[2],lookat[0],lookat[1],lookat[2]);
+    public void setCamera(float []eye,float []lookAt,float []up){
+       Matrix.setLookAtM(mCameraMatrix,0,eye[0],eye[1],eye[2],lookAt[0],lookAt[1],lookAt[2],up[0],up[1],up[2]);
+        if(DEBUG)
+            printMatrix(mCameraMatrix,"setCamera:");
     }
 
     public float[] getMatrix(){
@@ -108,7 +112,7 @@ public class TransPipeline {
         StringBuilder sb = new StringBuilder();
         for(int i=0;i<4;i++){
             for(int j=0;j<4;j++){
-                sb.append(" ").append(matrix[i*4+j]);
+                sb.append(" ").append(matrix[j*4+i]);
             }
             Log.e("GFX",title+":"+sb.toString());
             sb.delete(0,sb.length());

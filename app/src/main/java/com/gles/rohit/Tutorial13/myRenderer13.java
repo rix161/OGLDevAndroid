@@ -93,9 +93,10 @@ public class myRenderer13 implements GLSurfaceView.Renderer {
         GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER,mIndexBuffer.capacity()*4,mIndexBuffer,GLES20.GL_STATIC_DRAW);
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER,0);
 
+        mPipeline.setScale(new float[]{1.0f,1.0f,1.0f});
         mPipeline.setRotate(1.0f,new float[]{0.0f,1.0f,0.0f});
-        mPipeline.setTranslate(new float[]{0.0f, 0.0f, 15.0f});
-        mPipeline.setCamera(new float[]{0.0f,0.0f,0.0f},new float[]{0.0f,0.0f,1.0f},new float[]{0.0f,1.0f,0.0f});
+        mPipeline.setTranslate(new float[]{0.0f, 0.0f, -5.0f});
+        mPipeline.setCamera(new float[]{0.0f,5.0f,5.0f},new float[]{0.0f,0.0f,-10.0f},new float[]{0.0f,1.0f,0.0f});
     }
 
     @Override
