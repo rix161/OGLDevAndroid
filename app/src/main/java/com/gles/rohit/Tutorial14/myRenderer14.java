@@ -54,7 +54,7 @@ public class myRenderer14 implements GLSurfaceView.Renderer {
     private int numberOfVBOS = 2;
 
     private int mVextexDataSize = 3;
-    TransPipeline mPipeline;
+    private TransPipeline mPipeline;
 
     public myRenderer14(Context applicationContext) {
         mContext = applicationContext;
@@ -67,6 +67,10 @@ public class myRenderer14 implements GLSurfaceView.Renderer {
 
         mBuffers = new int[numberOfVBOS];
         mPipeline = new TransPipeline();
+    }
+
+    public void updateCamera(int buttonId){
+        mPipeline.mCamera.updateEyeCamera(buttonId);
     }
 
     @Override
@@ -96,7 +100,7 @@ public class myRenderer14 implements GLSurfaceView.Renderer {
         mPipeline.setScale(new float[]{1.0f,1.0f,1.0f});
         mPipeline.setRotate(1.0f,new float[]{0.0f,1.0f,0.0f});
         mPipeline.setTranslate(new float[]{0.0f, 1.0f, -5.0f});
-        mPipeline.setCamera(new float[]{0.0f,0.0f,5.0f},new float[]{0.0f,0.0f,-10.0f},new float[]{0.0f,1.0f,0.0f});
+        mPipeline.mCamera.setCamera(new float[]{0.0f,0.0f,5.0f},new float[]{0.0f,0.0f,-10.0f},new float[]{0.0f,1.0f,0.0f});
     }
 
     @Override

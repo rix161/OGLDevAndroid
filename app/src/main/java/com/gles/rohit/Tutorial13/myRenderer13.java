@@ -96,7 +96,7 @@ public class myRenderer13 implements GLSurfaceView.Renderer {
         mPipeline.setScale(new float[]{1.0f,1.0f,1.0f});
         mPipeline.setRotate(1.0f,new float[]{0.0f,1.0f,0.0f});
         mPipeline.setTranslate(new float[]{0.0f, 0.0f, -5.0f});
-        mPipeline.setCamera(new float[]{0.0f,5.0f,5.0f},new float[]{0.0f,0.0f,-10.0f},new float[]{0.0f,1.0f,0.0f});
+        mPipeline.mCamera.setCamera(new float[]{0.0f,5.0f,5.0f},new float[]{0.0f,0.0f,-10.0f},new float[]{0.0f,1.0f,0.0f});
     }
 
     @Override
