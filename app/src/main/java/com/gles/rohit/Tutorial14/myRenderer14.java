@@ -72,6 +72,9 @@ public class myRenderer14 implements GLSurfaceView.Renderer {
     public void updateCamera(int buttonId){
         mPipeline.mCamera.updateEyeCamera(buttonId);
     }
+    public void rotateCamera(float rotX,float rotY){
+        mPipeline.mCamera.rotateCamera(rotX,rotY);
+    }
 
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {

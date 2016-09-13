@@ -9,6 +9,7 @@ import android.util.AttributeSet;
  */
 public class myGLSurfaceView extends GLSurfaceView {
     private Context mContext;
+    private GLSurfaceView mRenderer;
     public myGLSurfaceView(Context context) {
         super(context);
         mContext = context;

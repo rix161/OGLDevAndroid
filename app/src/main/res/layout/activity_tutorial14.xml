@@ -5,10 +5,12 @@
     android:layout_height="fill_parent"
     tools:context="com.gles.rohit.Tutorial14.Tutorial14">
 
-<com.gles.rohit.Tutorial14.myGLSurfaceView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/mSurfaceView"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/SVContainer"
+        android:orientation="vertical">
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"

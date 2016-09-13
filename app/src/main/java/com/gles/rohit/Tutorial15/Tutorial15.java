@@ -1,13 +1,16 @@
-package com.gles.rohit.Tutorial14;
+package com.gles.rohit.Tutorial15;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.gles.rohit.Tutorial1.myRenderer;
+import com.gles.rohit.Tutorial14.myRenderer14;
 import com.gles.rohit.ogldevandroid.R;
 
-public class Tutorial14 extends AppCompatActivity {
-    myGLSurfaceView mSurfaceView;
+public class Tutorial15 extends AppCompatActivity {
+    myGLSurfaceView15 mSurfaceView;
     myRenderer14 mRenderer;
 
     private class buttonClick implements View.OnClickListener{
@@ -26,8 +29,9 @@ public class Tutorial14 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial14);
-        ViewGroup mSurfaceViewContainer = (ViewGroup)findViewById(R.id.SVContainer);
-        mSurfaceView = new myGLSurfaceView(getApplicationContext());
+
+        ViewGroup mSurfaceViewContainer = (ViewGroup) findViewById(R.id.SVContainer);
+        mSurfaceView = new myGLSurfaceView15(getApplicationContext());
         mSurfaceView.setEGLContextClientVersion(2);
         mRenderer = new myRenderer14(getApplicationContext());
         mSurfaceView.setRenderer(mRenderer);
