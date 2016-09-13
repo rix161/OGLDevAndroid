@@ -24,8 +24,10 @@ public class myRenderer5 implements GLSurfaceView.Renderer {
     private final float triangleData[] = {
             -1.0f,-1.0f,0.0f,
             1.0f,0.0f,0.0f,1.0f,
+
             1.0f,-1.0f,0.0f,
             0.0f,1.0f,0.0f,1.0f,
+
             0.0f,1.0f,0.0f,
             0.0f,0.0f,1.0f,1.0f,
     };
