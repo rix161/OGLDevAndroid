@@ -12,9 +12,9 @@ import android.opengl.GLUtils;
 public class Texture {
 
     private Bitmap mBitmap;
-    private int mTextureId[];
+    protected int mTextureId[];
 
-    int loadTexture(Context context,int resID){
+    protected int loadTexture(Context context,int resID){
         mBitmap = BitmapFactory.decodeResource(context.getResources(),resID);
 
         if(mBitmap==null)

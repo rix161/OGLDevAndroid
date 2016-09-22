@@ -8,4 +8,5 @@ public interface Shape {
     public void draw(int vertexDataHandle,int colorHandle,int textureUniformHandle,int textureCoordHandle);
     public void destroy();
     public boolean loadTexture(int resId);
+    public void setTexture(Texture texture);
 }

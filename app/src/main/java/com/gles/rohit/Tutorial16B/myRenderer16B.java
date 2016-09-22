@@ -1,4 +1,4 @@
-package com.gles.rohit.Tutorial16;
+package com.gles.rohit.Tutorial16B;
 
 import android.content.Context;
 
@@ -6,6 +6,8 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 
+import com.gles.rohit.Common.ASTCTexture;
+import com.gles.rohit.Common.ETC2Texture;
 import com.gles.rohit.Common.FileReader;
 import com.gles.rohit.Common.ShaderHelper;
 import com.gles.rohit.Common.Shape;
@@ -19,7 +21,7 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Created by Rohith on 03-09-2016.
  */
-public class myRenderer16 implements GLSurfaceView.Renderer {
+public class myRenderer16B implements GLSurfaceView.Renderer {
     private Context mContext;
     private final String TAG = "GFX:";
 
@@ -36,7 +38,7 @@ public class myRenderer16 implements GLSurfaceView.Renderer {
 
     private TransPipeline mPipeline;
     private Shape mShape;
-    public myRenderer16(Context applicationContext) {
+    public myRenderer16B(Context applicationContext) {
         mContext = applicationContext;
         mShape = new ShapePyramid(mContext);
         mPipeline = new TransPipeline();
@@ -67,7 +69,8 @@ public class myRenderer16 implements GLSurfaceView.Renderer {
         mMMatrixHandle = GLES20.glGetUniformLocation(mProgramId,"uMMatrix");
         mTextureSamplerHandle = GLES20.glGetUniformLocation(mProgramId,"uTextureSampler");
         mShape.loadBuffers();
-        mShape.loadTexture(R.drawable.test);
+        mShape.setTexture(new ETC2Texture());
+        mShape.loadTexture(R.raw.testetc);
 
         mPipeline.setScale(new float[]{1.0f,1.0f,1.0f});
         mPipeline.setRotate(1.0f,new float[]{0.0f,1.0f,0.0f});

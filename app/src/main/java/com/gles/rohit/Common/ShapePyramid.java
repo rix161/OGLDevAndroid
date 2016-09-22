@@ -19,13 +19,13 @@ public class ShapePyramid implements Shape {
             1.0f,0.0f,0.0f,1.0f,
             0.0f,0.0f,
             0.0f, -1.0f, -1.15475f,
-            1.0f,0.0f,0.0f,1.0f,
+            0.0f,1.0f,0.0f,1.0f,
             0.5f,0.0f,
             1.0f, -1.0f, 0.5773f,
-            1.0f,0.0f,0.0f,1.0f,
+            0.0f,0.0f,1.0f,1.0f,
             1.0f,0.0f,
             0.0f, 1.0f, 0.0f,
-            1.0f,0.0f,0.0f,1.0f,
+            1.0f,1.0f,1.0f,1.0f,
             0.5f,1.0f,
     };
 
@@ -61,10 +61,16 @@ public class ShapePyramid implements Shape {
         mIndexBuffer.put(pyramidIndex).position(0);
 
         mBuffers = new int[numberOfVBOS];
-        mTexture = new Texture();
+    }
+
+    public void setTexture(Texture texture){
+        mTexture = texture;
     }
 
     public boolean loadTexture(int resId){
+        if( mTexture==null )
+            mTexture = new Texture();
+
         mTextureID = mTexture.loadTexture(mContext,resId);
         if(mTextureID!=-1)
             return true;
