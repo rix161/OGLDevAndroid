@@ -20,15 +20,11 @@ public class ASTCTexture extends Texture {
     protected int loadTexture(Context context, int resID){
         InputStream mInputStream = context.getResources().openRawResource(resID);
         byte []buffer = Utils.inputStreamToByteBuffer(mInputStream);
-        for(int i=0;i<HEADER_SIZE;i++){
-            Log.e("GFX",i+":"+String.format("%02x",buffer[i]));
-        }
 
         if(buffer!=null && buffer.length!=0){
-            mWidth = ((int)buffer[7]+((int)buffer[8]<<8)+((int)buffer[9]<<16));
-            mHeight =(int)buffer[10]+((int)buffer[11]<<8)+((int)buffer[12]<<16);
+            mWidth = (((int)buffer[8]<<8)+((int)buffer[7]& 0XFF));
+            mHeight = (((int)buffer[11]<<8)+((int)buffer[10]& 0XFF));
             int mInternalFormat = getInternalFormat((int)buffer[4],(int)buffer[5]);
-            Log.e("GFX","ASTC Texture width:"+mWidth+" X "+"Height:"+mHeight);
             mTextureId = new int[1];
             GLES20.glGenTextures(1,mTextureId,0);
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D,mTextureId[0]);

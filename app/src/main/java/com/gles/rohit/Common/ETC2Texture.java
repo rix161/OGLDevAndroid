@@ -27,7 +27,6 @@ public class ETC2Texture extends Texture {
         if(buffer!=null && buffer.length!=0){
             mWidth = (((int)buffer[12]<<8)+((int)buffer[13]& 0XFF));
             mHeight =(((int)buffer[14]<<8)+((int)buffer[15]& 0XFF));
-            Log.e("GFX","ETC2 Texture width:"+mWidth+" X "+"Height:"+mHeight);
             mTextureId = new int[1];
             GLES20.glGenTextures(1,mTextureId,0);
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D,mTextureId[0]);
