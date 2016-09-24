@@ -7,7 +7,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name=".OglDevAndroid">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +31,8 @@
         <activity android:name="com.gles.rohit.Tutorial14.Tutorial14" />
         <activity android:name="com.gles.rohit.Tutorial15.Tutorial15" />
         <activity android:name="com.gles.rohit.Tutorial16.Tutorial16" />
-        <activity android:name="com.gles.rohit.Tutorial16B.Tutorial16B"></activity>
+        <activity android:name="com.gles.rohit.Tutorial16B.Tutorial16B" />
+        <activity android:name="com.gles.rohit.Tutorial17.Tutorial17" />
     </application>
 
 </manifest>

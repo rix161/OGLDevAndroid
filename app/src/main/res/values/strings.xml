@@ -8,5 +8,17 @@
     <string name="btn_down">Down</string>
     <string name="btn_right">Right</string>
     <string name="btn_left">Left</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <string name="ambi_light_title">Ambient Lighting</string>
+    <string name="ambi_light_Intensity">Intensity:</string>
+    <string name="ambi_light_Color">Color:</string>
+
+    <string name="Color_red">Red:</string>
+    <string name="Color_green">Green:</string>
+    <string name="Color_blue">Blue:</string>
+    <string name="Color_alpha">Alpha:</string>
+
 </resources>
 

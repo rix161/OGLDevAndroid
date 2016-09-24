@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    tools:context="com.gles.rohit.Tutorial17.Tutorial17">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/SVContainer"
+        android:orientation="vertical"
+        android:weightSum="1">
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/oglSettingsMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.75"
+        android:scaleY="0.75"
+        android:tag="unset"
+        android:src="@android:drawable/ic_menu_add"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:alpha="0.5"/>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/oglSettingsCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="unset"
+        android:src="@android:drawable/ic_menu_camera"
+        android:layout_above="@+id/oglSettingsMain"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="80dp"
+        android:visibility="invisible"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/oglSettingsLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="unset"
+        android:src="@android:drawable/ic_menu_view"
+        android:layout_below="@+id/oglSettingsMain"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="80dp"
+        android:visibility="invisible"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+        <include layout="@layout/camerakeyboard"/>
+    </LinearLayout>
+
+
+</RelativeLayout>
