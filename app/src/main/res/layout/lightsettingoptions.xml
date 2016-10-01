@@ -15,7 +15,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:ems="4"
-                android:id="@+id/ambi_light_Intensity"
+                android:id="@+id/kb_ambi_light_Intensity"
                 android:layout_weight="1" />
         </LinearLayout>
 
@@ -62,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:ems="4"
-                android:id="@+id/ambi_light_red"
+                android:id="@+id/kb_ambi_light_red"
                 android:layout_weight="1" />
 
             <TextView
@@ -75,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:ems="4"
-                android:id="@+id/ambi_light_green"
+                android:id="@+id/kb_ambi_light_green"
                 android:layout_weight="1" />
 
             <TextView
@@ -88,9 +89,92 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:ems="4"
-                android:id="@+id/ambi_light_blue"
+                android:id="@+id/kb_ambi_light_blue"
                 android:layout_weight="1" />
             </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/diffuse_settings"
+        android:paddingTop="@dimen/activity_horizontal_margin">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:text="@string/diffuse_light_title"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/light_Intensity"
+                android:textStyle="bold"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="4"
+                android:id="@+id/kb_diffuse_light_Intensity"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ambi_light_Color"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Color_red"
+                android:textStyle="bold"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="4"
+                android:id="@+id/kb_diffuse_light_red"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Color_green"
+                android:textStyle="bold"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="4"
+                android:id="@+id/kb_diffuse_light_green"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Color_blue"
+                android:textStyle="bold"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="4"
+                android:id="@+id/kb_diffuse_light_blue"
+                android:layout_weight="1" />
+        </LinearLayout>
     </LinearLayout>
 
     <Button

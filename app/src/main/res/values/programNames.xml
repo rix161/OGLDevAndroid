@@ -18,5 +18,6 @@
         <item>Tutorial 16A: Basic Texture Mapping</item>
         <item>Tutorial 16B: Using Compressed Textures</item>
         <item>Tutorial 17: Ambient Lighting</item>
+        <item>Tutorial 18: Diffuse Lighting</item>
     </string-array>
 </resources>

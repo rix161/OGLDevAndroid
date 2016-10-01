@@ -35,17 +35,17 @@ public class Camera {
 
     public void updateEyeCamera(int buttonId){
       switch (buttonId){
-           case R.id.btn_right: mEye[0] +=mScale;
+           case R.id.kb_btn_right: mEye[0] +=mScale;
                                 break;
-           case R.id.btn_left:  mEye[0] -=mScale;
+           case R.id.kb_btn_left:  mEye[0] -=mScale;
                                 break;
-           case R.id.btn_up:    mEye[1] +=mScale;
+           case R.id.kb_btn_up:    mEye[1] +=mScale;
                                 break;
-           case R.id.btn_down:  mEye[1] -=mScale;
+           case R.id.kb_btn_down:  mEye[1] -=mScale;
                                 break;
-           case R.id.btn_forward: mEye[2] -=mScale;
+           case R.id.kb_btn_forward: mEye[2] -=mScale;
                                   break;
-           case R.id.btn_back:    mEye[2] +=mScale;
+           case R.id.kb_btn_back:    mEye[2] +=mScale;
                                   break;
        }
         Matrix.setLookAtM(mCameraMatrix,0,mEye[0],mEye[1],mEye[2],mLookAt[0],mLookAt[1],mLookAt[2],mUp[0],mUp[1],mUp[2]);

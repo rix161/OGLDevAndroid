@@ -13,6 +13,7 @@ import com.gles.rohit.Common.ShaderHelper;
 import com.gles.rohit.Common.Shape;
 import com.gles.rohit.Common.ShapePyramid;
 import com.gles.rohit.Common.TransPipeline;
+import com.gles.rohit.Common.myRenderer;
 import com.gles.rohit.ogldevandroid.R;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -21,7 +22,7 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Created by Rohith on 03-09-2016.
  */
-public class myRenderer17 implements GLSurfaceView.Renderer {
+public class myRenderer17 extends myRenderer {
     private Context mContext;
     private final String TAG = "GFX:";
 
@@ -43,7 +44,9 @@ public class myRenderer17 implements GLSurfaceView.Renderer {
 
     private final int TOTAL_LIGHTING_HANDLE = 2;
 
+
     public myRenderer17(Context applicationContext) {
+        super(applicationContext);
         mContext = applicationContext;
         mShape = new ShapePyramid(mContext);
         mPipeline = new TransPipeline();
@@ -51,13 +54,19 @@ public class myRenderer17 implements GLSurfaceView.Renderer {
         mLightingHandles = new int[TOTAL_LIGHTING_HANDLE];
     }
 
+    @Override
     public void updateCamera(int buttonId){
         mPipeline.mCamera.updateEyeCamera(buttonId);
     }
+    @Override
     public void rotateCamera(float rotX,float rotY){
         mPipeline.mCamera.rotateCamera(rotX,rotY);
     }
+
+    @Override
     public void setAmbientData(float intensity,float[] color){ mLighting.setAmbientLightData(intensity,color);}
+
+    @Override
     public float[] getLightData(){ return mLighting.getLightingData();}
 
     @Override
@@ -78,7 +87,7 @@ public class myRenderer17 implements GLSurfaceView.Renderer {
         mTextureSamplerHandle = GLES20.glGetUniformLocation(mProgramId,"uTextureSampler");
         mLightingHandles[0] = GLES20.glGetUniformLocation(mProgramId,"uAmbientData.intensity");
         mLightingHandles[1] = GLES20.glGetUniformLocation(mProgramId,"uAmbientData.color");
-        
+
         mShape.loadBuffers();
         mShape.setTexture(new ETC2Texture());
         mShape.loadTexture(R.raw.testetc);

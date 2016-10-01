@@ -149,6 +149,11 @@ public class OglDevProgramList extends ArrayAdapter<String> {
                 mContext.startActivity(intent);
                 break;
 
+            case 18:
+                intent = new Intent(mContext, Tutorial18.class);
+                mContext.startActivity(intent);
+                break;
+
             default:
                 Toast.makeText(mContext,"Invalid Selection",Toast.LENGTH_SHORT).show();
         }

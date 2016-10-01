@@ -15,10 +15,13 @@
     <string name="ambi_light_Intensity">Intensity:</string>
     <string name="ambi_light_Color">Color:</string>
 
+    <string name="light_Intensity">Intensity:</string>
+    <string name="light_Color">Color:</string>
     <string name="Color_red">Red:</string>
     <string name="Color_green">Green:</string>
     <string name="Color_blue">Blue:</string>
     <string name="Color_alpha">Alpha:</string>
+    <string name="diffuse_light_title">Diffuse Lighting</string>
 
 </resources>
 
