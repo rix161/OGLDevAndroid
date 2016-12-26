@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@android:color/darker_gray">
 
@@ -99,7 +99,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/diffuse_settings"
-        android:paddingTop="@dimen/activity_horizontal_margin">
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:visibility="gone">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -175,6 +176,58 @@
                 android:id="@+id/kb_diffuse_light_blue"
                 android:layout_weight="1" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ambi_light_position"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Position_X"
+                android:textStyle="bold"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="4"
+                android:id="@+id/kb_diffuse_X"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Position_Y"
+                android:textStyle="bold"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="4"
+                android:id="@+id/kb_diffuse_Y"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Position_Z"
+                android:textStyle="bold"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="4"
+                android:id="@+id/kb_diffuse_Z"
+                android:layout_weight="1" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <Button

@@ -17,7 +17,9 @@ public class myRenderer implements GLSurfaceView.Renderer {
     public void updateCamera(int buttonId){}
     public void rotateCamera(float rotX,float rotY) {}
     public void setAmbientData(float intensity,float[] color){}
+    public void setDiffuseData(float intensity,float[] color,float[] position){}
     public float[] getLightData(){return null;}
+
 
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {

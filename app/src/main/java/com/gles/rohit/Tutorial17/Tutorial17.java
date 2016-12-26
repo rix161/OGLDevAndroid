@@ -149,7 +149,7 @@ public class Tutorial17 extends AppCompatActivity {
             mContext = tutorial17;
             mLayoutInflator = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
             mPopUpView = mLayoutInflator.inflate(R.layout.lightsettingoptions,null);
-            mPopupWindow = new PopupWindow(mPopUpView,750,750,true);
+            mPopupWindow = new PopupWindow(mPopUpView,1024,1024,true);
 
         }
 

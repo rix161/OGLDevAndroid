@@ -20,7 +20,7 @@ import com.gles.rohit.ogldevandroid.R;
 
 public class TutorialTemplate extends AppCompatActivity {
 
-    myGLSurfaceView mSurfaceView;
+    protected myGLSurfaceView mSurfaceView;
     protected myRenderer mRenderer;
     FloatingActionButton mCameraButton;
     protected FloatingActionButton mLightButton;

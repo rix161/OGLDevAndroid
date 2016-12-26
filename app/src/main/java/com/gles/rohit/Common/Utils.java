@@ -10,6 +10,13 @@ import java.io.InputStream;
  * Created by Rohith on 12-09-2016.
  */
 public class Utils {
+    public enum lightType{
+        AMBIENT,
+        DIFFUSE,
+        SPECULAR,
+        POINT,
+        SPOT
+    }
 
     public static void printMatrix(float[]matrix,String title){
         StringBuilder sb = new StringBuilder();

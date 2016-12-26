@@ -22,6 +22,10 @@
     <string name="Color_blue">Blue:</string>
     <string name="Color_alpha">Alpha:</string>
     <string name="diffuse_light_title">Diffuse Lighting</string>
+    <string name="ambi_light_position">Position:</string>
+    <string name="Position_X">X:</string>
+    <string name="Position_Y">Y:</string>
+    <string name="Position_Z">Z:</string>
 
 </resources>
 
