@@ -106,7 +106,8 @@ public class lightSettingOnClick implements View.OnClickListener {
             return;
 
         float lightData[] = mRenderer.getLightData();
-        if(lightData != null || lightData.length<3)
+
+        if(lightData == null || lightData.length<3)
             return;
 
         final EditText mAmbiIntensity = (EditText) mPopupWindow.getContentView().findViewById(R.id.kb_ambi_light_Intensity);
@@ -122,6 +123,29 @@ public class lightSettingOnClick implements View.OnClickListener {
 
     private void setUpDiffuseLight() {
 
+        if(mRenderer == null)
+            return;
+
+        float lightData[] = mRenderer.getLightData();
+        if(lightData == null || lightData.length<3)
+            return;
+
+        final EditText mDiffuseIntensity = (EditText) mPopupWindow.getContentView().findViewById(R.id.kb_diffuse_light_Intensity);
+        mDiffuseIntensity.setText(lightData[4]+"");
+
+        final EditText mDiffuseX = (EditText) mPopupWindow.getContentView().findViewById(R.id.kb_diffuse_X);
+        mDiffuseX.setText(lightData[5]+"");
+        final EditText mDiffuseY = (EditText) mPopupWindow.getContentView().findViewById(R.id.kb_diffuse_Y);
+        mDiffuseY.setText(lightData[6]+"");
+        final EditText mDiffuseZ = (EditText) mPopupWindow.getContentView().findViewById(R.id.kb_diffuse_Z);
+        mDiffuseZ.setText(lightData[7]+"");
+
+        final EditText mDiffuseRed = (EditText) mPopupWindow.getContentView().findViewById(R.id.kb_diffuse_light_red);
+        mDiffuseRed.setText(lightData[8]+"");
+        final EditText mDiffuseBlue = (EditText) mPopupWindow.getContentView().findViewById(R.id.kb_diffuse_light_blue);
+        mDiffuseBlue.setText(lightData[9]+"");
+        final EditText mDiffuseGreen = (EditText) mPopupWindow.getContentView().findViewById(R.id.kb_diffuse_light_green);
+        mDiffuseGreen.setText(lightData[10]+"");
     }
 
     private void setUpSpecularLight() {
@@ -153,6 +177,27 @@ public class lightSettingOnClick implements View.OnClickListener {
 
 
     private void setDiffuseLight() {
+        final EditText mDiffuseIntensity = (EditText) mPopupWindow.getContentView().findViewById(R.id.kb_diffuse_light_Intensity);
+
+        final EditText mDiffuseRed = (EditText) mPopupWindow.getContentView().findViewById(R.id.kb_diffuse_light_red);
+        final EditText mDiffuseBlue = (EditText) mPopupWindow.getContentView().findViewById(R.id.kb_diffuse_light_blue);
+        final EditText mDiffuseGreen = (EditText) mPopupWindow.getContentView().findViewById(R.id.kb_diffuse_light_green);
+
+        final EditText mDiffuseX = (EditText) mPopupWindow.getContentView().findViewById(R.id.kb_diffuse_X);
+        final EditText mDiffuseY = (EditText) mPopupWindow.getContentView().findViewById(R.id.kb_diffuse_Y);
+        final EditText mDiffuseZ = (EditText) mPopupWindow.getContentView().findViewById(R.id.kb_diffuse_Z);
+
+        float newDiffuseIntensity = Float.parseFloat(mDiffuseIntensity.getText().toString());
+
+        float newDiffuseRed = Float.parseFloat(mDiffuseRed.getText().toString());
+        float newDiffuseGreen = Float.parseFloat(mDiffuseBlue.getText().toString());
+        float newDiffuseBlue = Float.parseFloat(mDiffuseGreen.getText().toString());
+
+        float newDiffuseX = Float.parseFloat(mDiffuseX.getText().toString());
+        float newDiffuseY = Float.parseFloat(mDiffuseY.getText().toString());
+        float newDiffuseZ = Float.parseFloat(mDiffuseZ.getText().toString());
+
+        mRenderer.setDiffuseData(newDiffuseIntensity,new float[]{newDiffuseRed,newDiffuseGreen,newDiffuseBlue},new float[]{newDiffuseX,newDiffuseY,newDiffuseZ});
 
     }
 

@@ -39,6 +39,8 @@ public class myRenderer18 extends myRenderer {
     private int mProgramId;
 
     private int mVertexDataHandle;
+    private int mNormalDataHandle;
+    private int mMVPMatrixHandle;
     private int mMMatrixHandle;
 
     private int []mLightingHandles;
@@ -50,7 +52,7 @@ public class myRenderer18 extends myRenderer {
     private Shape mShape;
     private Lighting mLighting;
 
-    private final int TOTAL_LIGHTING_HANDLE = 2;
+    private final int TOTAL_LIGHTING_HANDLE = 2+3;
 
     @Override
     public void updateCamera(int buttonId){
@@ -65,7 +67,7 @@ public class myRenderer18 extends myRenderer {
     public void setAmbientData(float intensity,float[] color){ mLighting.setAmbientLightData(intensity,color);}
 
     @Override
-    public void setDiffuseData(float intensity,float[] color,float[] position){ mLighting.setDiffuseLightData(intensity,color,position);}
+    public void setDiffuseData(float intensity,float[] color,float[] position){ mLighting.setDirectionLightData(intensity,color,position); }
 
     @Override
     public float[] getLightData(){ return mLighting.getLightingData();}
@@ -73,8 +75,8 @@ public class myRenderer18 extends myRenderer {
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
 
-        mVShaderId = ShaderHelper.generateShader(GLES20.GL_VERTEX_SHADER, FileReader.readTextFileFromRawResource(mContext, R.raw.tutorial17vs));
-        mFShaderId = ShaderHelper.generateShader(GLES20.GL_FRAGMENT_SHADER, FileReader.readTextFileFromRawResource(mContext,R.raw.tutorial17fs));
+        mVShaderId = ShaderHelper.generateShader(GLES20.GL_VERTEX_SHADER, FileReader.readTextFileFromRawResource(mContext, R.raw.tutorial18vs));
+        mFShaderId = ShaderHelper.generateShader(GLES20.GL_FRAGMENT_SHADER, FileReader.readTextFileFromRawResource(mContext,R.raw.tutorial18fs));
         if(mVShaderId == -1 || mFShaderId == -1){
             Log.e(TAG,"Something is wrong with shaders");
         }
@@ -84,25 +86,33 @@ public class myRenderer18 extends myRenderer {
 
         mVertexDataHandle = GLES20.glGetAttribLocation(mProgramId,"aPosition");
         mTextureCoordHandle = GLES20.glGetAttribLocation(mProgramId,"aTexture");
+        mNormalDataHandle = GLES20.glGetAttribLocation(mProgramId,"aNormal");
+        mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgramId,"uMVPMatrix");
         mMMatrixHandle = GLES20.glGetUniformLocation(mProgramId,"uMMatrix");
         mTextureSamplerHandle = GLES20.glGetUniformLocation(mProgramId,"uTextureSampler");
         mLightingHandles[0] = GLES20.glGetUniformLocation(mProgramId,"uAmbientData.intensity");
         mLightingHandles[1] = GLES20.glGetUniformLocation(mProgramId,"uAmbientData.color");
+        mLightingHandles[2] = GLES20.glGetUniformLocation(mProgramId,"uDirectionData.intensity");
+        mLightingHandles[3] = GLES20.glGetUniformLocation(mProgramId,"uDirectionData.position");
+        mLightingHandles[4] = GLES20.glGetUniformLocation(mProgramId,"uDirectionData.color");
+
 
         mShape.loadBuffers();
         mShape.setTexture(new ETC2Texture());
         mShape.loadTexture(R.raw.testetc);
 
         mPipeline.setScale(new float[]{1.0f,1.0f,1.0f});
-        mPipeline.setRotate(1.0f,new float[]{0.0f,1.0f,0.0f});
-        mPipeline.setTranslate(new float[]{0.0f, 1.0f, -5.0f});
-        mPipeline.mCamera.setCamera(new float[]{0.0f,0.0f,5.0f},new float[]{0.0f,0.0f,-10.0f},new float[]{0.0f,1.0f,0.0f});
+        mPipeline.setRotate(0,new float[]{0.0f,1.0f,0.0f});
+        mPipeline.setTranslate(new float[]{0.0f, 0.0f, -1.0f});
+        mPipeline.mCamera.setCamera(new float[]{0.0f,0.0f,3.0f},new float[]{0.0f,0.0f,-1.0f},new float[]{0.0f,1.0f,0.0f});
+        mLighting.setDirectionLightData(0.75f,new float[]{1.0f,1.0f,1.0f},new float[]{1.0f,0.0f,0.0f});
+
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl10, int width, int height) {
         GLES20.glViewport(0,0,width,height);
-        mPipeline.setPerspective(width,height,30.0f,100.0f,1.0f);
+        mPipeline.setPerspective(width,height,60.0f,100.0f,1.0f);
 
     }
 
@@ -115,9 +125,10 @@ public class myRenderer18 extends myRenderer {
         GLES20.glEnable(GLES20.GL_CULL_FACE);
         GLES20.glCullFace(GLES20.GL_BACK);
 
-        GLES20.glUniformMatrix4fv(mMMatrixHandle,1,false,mPipeline.getMatrix(false,false,true),0);
+        GLES20.glUniformMatrix4fv(mMMatrixHandle,1,false,mPipeline.getModelMatrix(false,false,false),0);
+        GLES20.glUniformMatrix4fv(mMVPMatrixHandle,1,false,mPipeline.getMatrix(false,false,true),0);
         mLighting.doLighting(mLightingHandles);
-        mShape.draw(mVertexDataHandle,-1,mTextureSamplerHandle,mTextureCoordHandle);
+        mShape.draw(mVertexDataHandle,-1,mNormalDataHandle,mTextureSamplerHandle,mTextureCoordHandle);
     }
 
     public void onDestroy(){

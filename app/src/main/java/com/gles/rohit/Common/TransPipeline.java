@@ -17,7 +17,7 @@ public class TransPipeline {
 
 
     private float []mAxis;
-    private float mAngle;
+    private static float mAngle;
 
     private float []mScale;
 
@@ -73,7 +73,23 @@ public class TransPipeline {
     }
 
     private void rotate(){
-        Matrix.rotateM(mRotateMatrix,0,mAngle,mAxis[0],mAxis[1],mAxis[2]);
+        setRotate(mAngle+1f,mAxis);
+    }
+
+    public float[] getModelMatrix(boolean scale,boolean translate,boolean rotate){
+
+        Matrix.setIdentityM(mMatrix,0);
+        if(translate)
+            translate();
+        if(rotate)
+            rotate();
+
+        Matrix.multiplyMM(mMatrix,0,mScaleMatrix,0,mMatrix,0);
+        Matrix.multiplyMM(mMatrix,0,mRotateMatrix,0,mMatrix,0);
+        Matrix.multiplyMM(mMatrix,0,mTranslateMatrix,0,mMatrix,0);
+        Matrix.multiplyMM(mMatrix,0,mCamera.getMatrix(),0,mMatrix,0);
+
+        return mMatrix;
     }
 
     public float[] getMatrix(boolean scale,boolean translate,boolean rotate){

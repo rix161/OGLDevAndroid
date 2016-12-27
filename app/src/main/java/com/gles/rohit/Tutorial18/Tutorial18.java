@@ -10,14 +10,15 @@ import com.gles.rohit.ogldevandroid.R;
 
 public class Tutorial18 extends TutorialTemplate{
 
-
-    void setRenderer(){
+    @Override
+    public void setRenderer(){
         mRenderer = new myRenderer18(getApplicationContext());
         mSurfaceView.setRenderer(mRenderer);
     }
 
-    void setLightButton(){
-        lightSettingOnClick temp = new lightSettingOnClick(this,mRenderer,new Utils.lightType[]{Utils.lightType.AMBIENT});
+    @Override
+    public void setLightButton(){
+        lightSettingOnClick temp = new lightSettingOnClick(this,mRenderer,new Utils.lightType[]{Utils.lightType.AMBIENT, Utils.lightType.DIFFUSE});
         View popUp = temp.getPopUpView();
         LinearLayout ll = (LinearLayout) popUp.findViewById(R.id.diffuse_settings);
         ll.setVisibility(View.VISIBLE);

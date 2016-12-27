@@ -37,12 +37,12 @@ public class TutorialTemplate extends AppCompatActivity {
 
     }
 
-    void setRenderer(){
+    public void setRenderer(){
         mRenderer = new myRenderer(getApplicationContext());
         mSurfaceView.setRenderer(mRenderer);
     }
 
-    void setLightButton(){
+    public void setLightButton(){
         mLightButton.setOnClickListener(new lightSettingOnClick(this,mRenderer));
     }
 
