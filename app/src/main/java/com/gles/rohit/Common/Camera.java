@@ -59,4 +59,8 @@ public class Camera {
         mLookAt[1]+=rotY;
         Matrix.setLookAtM(mCameraMatrix,0,mEye[0],mEye[1],mEye[2],mLookAt[0],mLookAt[1],mLookAt[2],mUp[0],mUp[1],mUp[2]);
     }
+
+    public float[] getEyeMatrix(){
+        return mEye;
+    }
 }

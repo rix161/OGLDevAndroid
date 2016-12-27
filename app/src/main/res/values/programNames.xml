@@ -19,5 +19,6 @@
         <item>Tutorial 16B: Using Compressed Textures</item>
         <item>Tutorial 17: Ambient Lighting</item>
         <item>Tutorial 18: Diffuse Lighting</item>
+        <item>Tutorial 19: Specular Lighting</item>
     </string-array>
 </resources>

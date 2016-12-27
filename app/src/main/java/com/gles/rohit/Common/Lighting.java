@@ -17,6 +17,7 @@ public class Lighting {
 
     private final int mTotalAmbiData = 4;
     private int mTotalDataSize;
+    private SpecularData mSpecularData;
 
     public Lighting(){
         mAmbiIntensity = 0.01f;
@@ -42,6 +43,13 @@ public class Lighting {
     public void doLighting(int handles[]){
         setAmbientLight(handles[0],handles[1]);
         setDirectionalLight(handles);
+        setSpecularData(handles);
+    }
+
+    private void setSpecularData(int[] handles) {
+        GLES20.glUniform1f(handles[5],mSpecularData.getIntensity());
+        GLES20.glUniform1f(handles[6],mSpecularData.getPower());
+        GLES20.glUniform3fv(handles[7],1,mSpecularData.getEyePosition(),0);
     }
 
     private void setDirectionalLight(int[] handles) {
@@ -85,6 +93,10 @@ public class Lighting {
         return lightData;
     }
 
+    public void setSpecularLightData(float intensity, float power, float[] eyePosition) {
+        mSpecularData = new SpecularData(intensity,power,eyePosition);
+    }
+
     private class DirectionalLights {
 
         private float mDirIntensity;
@@ -102,4 +114,23 @@ public class Lighting {
         public float[] getColor(){return mDirColor;}
 
     }
+
+    private class SpecularData {
+
+        private float mIntensity;
+        private float mPower;
+        private float[] eyePosition;
+
+        SpecularData(float intensity,float power,float[] eye){
+            mIntensity = intensity;
+            mPower = power;
+            eyePosition = eye;
+        }
+
+        public float getIntensity(){return mIntensity;}
+        public float getPower(){ return mPower;}
+        public float[] getEyePosition(){ return eyePosition;}
+
+    }
+
 }
