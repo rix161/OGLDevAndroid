@@ -47,9 +47,11 @@ public class Lighting {
     }
 
     private void setSpecularData(int[] handles) {
-        GLES20.glUniform1f(handles[5],mSpecularData.getIntensity());
-        GLES20.glUniform1f(handles[6],mSpecularData.getPower());
-        GLES20.glUniform3fv(handles[7],1,mSpecularData.getEyePosition(),0);
+        if(handles.length>5) {
+            GLES20.glUniform1f(handles[5], mSpecularData.getIntensity());
+            GLES20.glUniform1f(handles[6], mSpecularData.getPower());
+            GLES20.glUniform3fv(handles[7], 1, mSpecularData.getEyePosition(), 0);
+        }
     }
 
     private void setDirectionalLight(int[] handles) {
