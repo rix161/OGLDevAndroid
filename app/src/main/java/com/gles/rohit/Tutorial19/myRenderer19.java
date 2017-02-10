@@ -103,8 +103,8 @@ public class myRenderer19 extends myRenderer {
         mPipeline.setScale(new float[]{1.0f,1.0f,1.0f});
         mPipeline.setRotate(0,new float[]{0.0f,1.0f,0.0f});
         mPipeline.setTranslate(new float[]{0.0f, 0.0f, -1.0f});
-        mPipeline.mCamera.setCamera(new float[]{0.0f,0.0f,3.0f},new float[]{0.0f,0.0f,-1.0f},new float[]{0.0f,1.0f,0.0f});
-        mLighting.setDirectionLightData(0.75f,new float[]{1.0f,1.0f,1.0f},new float[]{1.0f,0.0f,0.0f});
+        mPipeline.mCamera.setCamera(new float[]{0.0f,0.0f,-3.0f},new float[]{0.0f,0.0f,1.0f},new float[]{0.0f,1.0f,0.0f});
+        mLighting.setDirectionLightData(0.00f,new float[]{1.0f,1.0f,1.0f},new float[]{0.0f,0.0f,1.0f});
         mLighting.setSpecularLightData(1f,32f,mPipeline.mCamera.getEyeMatrix());
 
     }

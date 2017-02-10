@@ -73,7 +73,7 @@ public class TransPipeline {
     }
 
     private void rotate(){
-        setRotate(mAngle+1f,mAxis);
+        setRotate(mAngle+0.1f,mAxis);
     }
 
     public float[] getModelMatrix(boolean scale,boolean translate,boolean rotate){
