@@ -20,7 +20,7 @@ public class Lighting {
     private SpecularData mSpecularData;
 
     public Lighting(){
-        mAmbiIntensity = 0.01f;
+        mAmbiIntensity = 1.0f;
         mAmbiColor = new float[]{1.0f,1.0f,1.0f};
         mTotalDataSize = mTotalAmbiData;
         mDirLights = new LinkedList<>();
