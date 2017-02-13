@@ -127,6 +127,7 @@ public class myRenderer19 extends myRenderer {
 
         GLES20.glUniformMatrix4fv(mMMatrixHandle,1,false,mPipeline.getModelMatrix(false,false,false),0);
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle,1,false,mPipeline.getMatrix(false,false,true),0);
+        mLighting.setSpecularLightData(1f,32f,mPipeline.mCamera.getEyeMatrix());
         mLighting.doLighting(mLightingHandles);
         mShape.draw(mVertexDataHandle,-1,mNormalDataHandle,mTextureSamplerHandle,mTextureCoordHandle);
     }

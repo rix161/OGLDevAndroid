@@ -13,17 +13,15 @@ import java.util.LinkedList;
 public class Lighting {
     private float mAmbiIntensity;
     private float[] mAmbiColor;
-    LinkedList<DirectionalLights> mDirLights;
+    private DirectionalLights mDirLights;
+    private SpecularData mSpecularData;
 
     private final int mTotalAmbiData = 4;
-    private int mTotalDataSize;
-    private SpecularData mSpecularData;
 
     public Lighting(){
         mAmbiIntensity = 1.0f;
         mAmbiColor = new float[]{1.0f,1.0f,1.0f};
-        mTotalDataSize = mTotalAmbiData;
-        mDirLights = new LinkedList<>();
+
     }
 
     public void setAmbientLightData(float intensity,float color[]){
@@ -32,11 +30,10 @@ public class Lighting {
             mAmbiColor = color;
     }
 
-    public void setDirectionLightData(float intensity,float[] color,float[] pos){
-        if(mDirLights!=null) {
-            mDirLights.clear();
-            mDirLights.add(new DirectionalLights(intensity, pos, color));
-        }
+    public void setDirectionLightData(float intensity,float[] color,float[] direction){
+
+        mDirLights = new DirectionalLights(intensity, direction, color);
+
     }
 
 
@@ -57,13 +54,12 @@ public class Lighting {
     private void setDirectionalLight(int[] handles) {
         if(handles.length<=2) return;
 
-        for(DirectionalLights dirLight:mDirLights) {
-            for (int i = 2; i < handles.length; i += 3) {
-                GLES20.glUniform1f(handles[i], dirLight.getIntensity());
-                GLES20.glUniform3fv(handles[i + 1], 1, dirLight.getPosition(), 0);
-                GLES20.glUniform3fv(handles[i + 2], 1, dirLight.getColor(), 0);
-            }
+        if(mDirLights!=null) {
+            GLES20.glUniform1f(handles[2], mDirLights.getIntensity());
+            GLES20.glUniform3fv(handles[3], 1, mDirLights.getPosition(), 0);
+            GLES20.glUniform3fv(handles[4], 1, mDirLights.getColor(), 0);
         }
+
     }
 
     private void setAmbientLight(int intensityHandle, int colorHandle) {
@@ -78,20 +74,23 @@ public class Lighting {
         lightData[1] = mAmbiColor[0];
         lightData[2] = mAmbiColor[1];
         lightData[3] = mAmbiColor[2];
-        if(mDirLights!=null && mDirLights.size()>0) {
-            DirectionalLights light = mDirLights.get(0);
-            lightData[4] = light.getIntensity();
 
-            float dirPos[] = light.getPosition();
+        if(mDirLights!=null) {
+
+            lightData[4] = mDirLights.getIntensity();
+
+            float dirPos[] = mDirLights.getPosition();
             lightData[5] = dirPos[0];
             lightData[6] = dirPos[1];
             lightData[7] = dirPos[2];
 
-            float dirColor[] = light.getColor();
+            float dirColor[] = mDirLights.getColor();
             lightData[8] = dirColor[0];
             lightData[9] = dirColor[1];
             lightData[10] = dirColor[2];
+
         }
+
         return lightData;
     }
 
@@ -103,16 +102,16 @@ public class Lighting {
 
         private float mDirIntensity;
         private float[] mDirColor;
-        private float[] mDirPos;
+        private float[] mDirDirection;
 
-        DirectionalLights(float intensity,float[] pos,float[] color){
+        DirectionalLights(float intensity,float[] direction,float[] color){
             mDirIntensity = intensity;
-            mDirPos = pos;
+            mDirDirection = direction;
             mDirColor = color;
         }
 
         public float getIntensity(){return mDirIntensity;}
-        public float[] getPosition(){return mDirPos;}
+        public float[] getPosition(){return mDirDirection;}
         public float[] getColor(){return mDirColor;}
 
     }
@@ -132,7 +131,7 @@ public class Lighting {
         public float getIntensity(){return mIntensity;}
         public float getPower(){ return mPower;}
         public float[] getEyePosition(){ return eyePosition;}
-
+        public void setEyePosition(float[]pos){ eyePosition = pos;}
     }
 
 }

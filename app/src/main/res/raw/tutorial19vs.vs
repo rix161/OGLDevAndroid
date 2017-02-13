@@ -12,6 +12,6 @@ void main(){
 
     vTexture = aTexture;
     gl_Position = uMVPMatrix*vec4(aPosition,1.0);
-    vNormal =  (uMMatrix*vec4(aNormal,0.0)).xyz;
+    vNormal =  normalize((uMMatrix*vec4(aNormal,0.0)).xyz);
     vWorldPos = (uMMatrix*vec4(aPosition,1.0)).xyz;
 }

@@ -1,41 +1,84 @@
 precision mediump float;
 
-struct AmbientData {
-    float intensity;
-    vec3 color;
+struct baseLight {
+  vec3 color;
+  float ambientIntensity;
+  float diffuseIntensity;
 };
 
-struct DirectionalData {
-    float intensity;
-    vec3 color;
+struct directionalLight{
+   baseLight base;
+   vec3 direction;
+};
+
+struct Attenuation{
+    float constant;
+    float linear;
+    float exponetial;
+};
+
+struct pointLight{
+    baseLight base;
     vec3 position;
+    Attenuation attenuation;
 };
 
-struct SpecularData{
-    float intensity;
-    float power;
-    vec3 eyePosition;
-};
+const int MAX_POINT_LIGHTS = 2;
 
 uniform sampler2D uTextureSampler;
-uniform AmbientData uAmbientData;
-uniform DirectionalData uDirectionData;
-uniform SpecularData uSpecularData;
+uniform float uPointLightNum;
+uniform pointLight uPointLights[MAX_POINT_LIGHTS];
+uniform directionalLight uDirectionalLight;
+uniform vec3 uEyePosition;
+uniform float uSpecularPower;
+uniform float uSpecularIntensity;
 
 varying vec2 vTexture;
 varying vec3 vNormal;
 varying vec3 vWorldPos;
 
+vec4 CalLightingInternal(baseLight base,vec3 direction){
+
+    vec4 ambientColor = vec4(base.color,1.0f) * base.ambientIntensity;
+    vec4 diffuseColor = vec4(0.0f,0.0f,0.0f,0.0f);
+    vec4 specularColor = vec4(0.0f,0.0f,0.0f,0.0f);
+
+    float diffuseFactor = dot(vNormal,-direction);
+    if(diffuseFactor > 0){
+        diffuseColor = vec4(base.color,1.0f) * base.diffuseIntensity * diffuseFactor;
+        vec3 vecToEye = normalize(uEyePosition - vWorldPos);
+        vec3 reflectVec = normalize(reflect(vNormal,direction));
+        float specularFactor = dot(vecToEye,reflectVec);
+        specularFactor = pow(specularFactor,uSpecularPower);
+        if(specularFactor > 0){
+            specularColor = vec4(base.color,1.0)*specularFactor*uSpecularIntensity;
+        }
+    }
+
+    return (ambientColor+diffuseColor+specularColor);
+}
+
+vec4 CalDirectionalLight(){
+    return CalLightingInternal(uDirectionalLight.base,uDirectionalLight.direction);
+}
+
+vec4 CalcPointLight(int i){
+    vec4 lightDirection = vWorldPosition - uPointLights[i].position;
+    float distance = length(lightDirection);
+    lightDirection = normalize(lightDirection);
+    vec4 light = CalLightingInternal(uPointLights[i].base,lightDirection);
+    light = light/(uPointLights[i].attenuation.constant+uPointLights[i].attenuation.linear*distance+
+    uPointLights[i].attenuation.exponetial*distance*distance);
+    return light;
+}
+
+
+
 void main(){
-    vec3 mAmbiFactor = uAmbientData.color * uAmbientData.intensity;
 
-    float diffuseFactor = max(dot(normalize(vNormal), -uDirectionData.position),0.0);
-    vec3 mDirFactor = uDirectionData.color*uDirectionData.intensity*diffuseFactor;
-    vec3 eyeVector = normalize(uSpecularData.eyePosition - vWorldPos);
-    vec3 reflectVector = normalize(reflect(uDirectionData.position,normalize(vNormal)));
-    float specularFactor = max(dot(eyeVector,reflectVector),0.0);
-    specularFactor = pow(specularFactor,uSpecularData.power);
-    vec3 specularColor = uDirectionData.color * uSpecularData.intensity*specularFactor;
-
-    gl_FragColor = texture2D(uTextureSampler,vTexture)*(vec4(mAmbiFactor+mDirFactor+specularColor,1.0));
+    vec4 TotalColor = CalcDirectionalLight();
+    for(int i=0 ; i<uPointLightNum ; i++){
+        TotalColor += CalcPointLight(i);
+    }
+    gl_FragColor = texture2D(uTextureSampler,vTexture) * vec4(totalColor);
 }
