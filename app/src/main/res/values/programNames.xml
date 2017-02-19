@@ -21,5 +21,6 @@
         <item>Tutorial 18: Diffuse Lighting</item>
         <item>Tutorial 19: Specular Lighting</item>
         <item>Tutorial 20: Point Lighting</item>
+        <item>Tutorial 21: Spot Lighting</item>
     </string-array>
 </resources>

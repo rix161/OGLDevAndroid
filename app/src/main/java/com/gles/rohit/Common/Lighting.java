@@ -16,14 +16,17 @@ public class Lighting {
     private DirectionalLights mDirLights;
     private SpecularData mSpecularData;
     private LinkedList<PointLight> mPointLights;
+    private LinkedList<SpotLight> mSpotLights;
     private int mNumPointLights;
+    private int mNumSpotLights;
 
     public Lighting(){
         mAmbiIntensity = 0.0f;
         mAmbiColor = new float[]{1.0f,1.0f,1.0f};
         mPointLights = new LinkedList<>();
+        mSpotLights = new LinkedList<>();
         mNumPointLights = 0;
-
+        mNumSpotLights = 0;
     }
 
     public void addPointLight(float[] color,float[] intensity,float[] pos,float[] attenuation ){
@@ -34,8 +37,22 @@ public class Lighting {
 
     }
 
+    public void addSpotLight(float[] color,float[] intensity,float[] pos,float[] attenuation,float[] direction,float cutoff ){
+
+        if(mSpotLights.size() >= mNumSpotLights) return;
+
+        mSpotLights.add(new SpotLight(color,intensity,pos,attenuation,direction,cutoff));
+
+    }
+
     public void updatePointLight(int index,float[] newPos){
+        if(index>=mPointLights.size())return;
         mPointLights.get(index).updatePosition(newPos);
+    }
+
+    public void updateSpotLight(int index,float[] newPos){
+        if(index>=mSpotLights.size())return;
+        mSpotLights.get(index).updatePosition(newPos);
     }
 
     public void setAmbientLightData(float intensity,float color[]){
@@ -56,6 +73,33 @@ public class Lighting {
         setDirectionalLight(handles);
         setSpecularData(handles);
         setPointLightData(handles);
+        setSpotLightData(handles);
+    }
+
+    private void setSpotLightData(int[] handles) {
+        int spotLightIndex = 9+7*mNumPointLights+1;
+
+        if(handles.length <= spotLightIndex) return;
+
+        GLES20.glUniform1i(handles[spotLightIndex],mSpotLights.size());
+        int count = 1;
+
+        for(SpotLight pLight:mSpotLights) {
+            GLES20.glUniform3fv(handles[spotLightIndex+count++],1,pLight.getColor(),0);
+            GLES20.glUniform1f(handles[spotLightIndex+count++],pLight.getAmbientIntensity());
+            GLES20.glUniform1f(handles[spotLightIndex+count++],pLight.getDiffuseIntensity());
+
+            GLES20.glUniform3fv(handles[spotLightIndex+count++],1,pLight.getPosition(),0);
+
+            GLES20.glUniform1f(handles[spotLightIndex+count++],pLight.getAttenuation()[0]);
+            GLES20.glUniform1f(handles[spotLightIndex+count++],pLight.getAttenuation()[1]);
+            GLES20.glUniform1f(handles[spotLightIndex+count++],pLight.getAttenuation()[2]);
+
+            GLES20.glUniform3fv(handles[spotLightIndex+count++],1,pLight.getDirection(),0);
+            GLES20.glUniform1f(handles[spotLightIndex+count++],pLight.getCutoff());
+
+        }
+
     }
 
     private void setPointLightData(int[] handles) {
@@ -142,6 +186,8 @@ public class Lighting {
     public void setNumberOfPointLights(int pointLightCount) {
         mNumPointLights = pointLightCount;
     }
+
+    public void setNumberOfSpotLights(int spotLightCount) { mNumSpotLights = spotLightCount;}
 
     private class DirectionalLights {
 
@@ -235,4 +281,20 @@ public class Lighting {
         }
     };
 
+
+    private class SpotLight extends PointLight {
+
+        private  float[] direction;
+        private float cutoff;
+
+        SpotLight(float[] color, float[] intensity, float[] position, float[] atten,float[] direction,float cutoff) {
+            super(color, intensity, position, atten);
+            this.direction = direction;
+            this.cutoff = cutoff;
+        }
+
+        float[] getDirection(){ return  direction;}
+
+        float getCutoff(){ return cutoff;}
+    }
 }
