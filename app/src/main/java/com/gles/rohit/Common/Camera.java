@@ -29,6 +29,7 @@ public class Camera {
         mLookAt = lookAt;
         mUp = up;
         Matrix.setLookAtM(mCameraMatrix,0,mEye[0],mEye[1],mEye[2],mLookAt[0],mLookAt[1],mLookAt[2],mUp[0],mUp[1],mUp[2]);
+
         if(DEBUG)
             Utils.printMatrix(mCameraMatrix,"setCamera:");
     }
@@ -43,9 +44,9 @@ public class Camera {
                                 break;
            case R.id.kb_btn_down:  mEye[1] -=mScale;
                                 break;
-           case R.id.kb_btn_forward: mEye[2] -=mScale;
+           case R.id.kb_btn_forward: mEye[2] +=mScale;
                                   break;
-           case R.id.kb_btn_back:    mEye[2] +=mScale;
+           case R.id.kb_btn_back:    mEye[2] -=mScale;
                                   break;
        }
         Matrix.setLookAtM(mCameraMatrix,0,mEye[0],mEye[1],mEye[2],mLookAt[0],mLookAt[1],mLookAt[2],mUp[0],mUp[1],mUp[2]);

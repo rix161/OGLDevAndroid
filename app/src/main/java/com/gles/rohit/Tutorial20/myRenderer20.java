@@ -5,13 +5,11 @@ import android.opengl.GLES20;
 import android.util.Log;
 
 import com.gles.rohit.Common.ASTCTexture;
-import com.gles.rohit.Common.ETC2Texture;
 import com.gles.rohit.Common.FileReader;
 import com.gles.rohit.Common.Lighting;
 import com.gles.rohit.Common.ShaderHelper;
 import com.gles.rohit.Common.Shape;
 import com.gles.rohit.Common.ShapePlane;
-import com.gles.rohit.Common.ShapePyramid;
 import com.gles.rohit.Common.TransPipeline;
 import com.gles.rohit.Common.myRenderer;
 import com.gles.rohit.ogldevandroid.R;
@@ -51,7 +49,14 @@ public class myRenderer20 extends myRenderer {
     private Shape mShape;
     private Lighting mLighting;
 
-    private final int TOTAL_LIGHTING_HANDLE = 2+3+3;
+    private final int pointLightCount = 2;
+
+    private final int TOTAL_LIGHTING_HANDLE = 2+4+3+1+7*pointLightCount;
+
+    static float val = 0.0f;
+
+
+
 
     @Override
     public void updateCamera(int buttonId){
@@ -90,18 +95,52 @@ public class myRenderer20 extends myRenderer {
         mMMatrixHandle = GLES20.glGetUniformLocation(mProgramId,"uMMatrix");
         mTextureSamplerHandle = GLES20.glGetUniformLocation(mProgramId,"uTextureSampler");
 
+        mLightingHandles[0] = GLES20.glGetUniformLocation(mProgramId,"uAmbientLight.ambientIntensity");
+        mLightingHandles[1] = GLES20.glGetUniformLocation(mProgramId,"uAmbientLight.ambientColor");
+
+        mLightingHandles[2] = GLES20.glGetUniformLocation(mProgramId,"uDirectionalLight.base.color");
+        mLightingHandles[3] = GLES20.glGetUniformLocation(mProgramId,"uDirectionalLight.base.ambientIntensity");
+        mLightingHandles[4] = GLES20.glGetUniformLocation(mProgramId,"uDirectionalLight.base.diffuseIntensity");
+        mLightingHandles[5] = GLES20.glGetUniformLocation(mProgramId,"uDirectionalLight.base.direction");
+
+        mLightingHandles[6] = GLES20.glGetUniformLocation(mProgramId,"uSpecularIntensity");
+        mLightingHandles[7] = GLES20.glGetUniformLocation(mProgramId,"uSpecularPower");
+        mLightingHandles[8] = GLES20.glGetUniformLocation(mProgramId,"uEyePosition");
+
+        int count = 1;
+        mLightingHandles[9] = GLES20.glGetUniformLocation(mProgramId, "uPointLightNum");
+        StringBuilder builder;
+        for(int i=0;i<pointLightCount;i++) {
+
+            builder = new StringBuilder();
+            builder.append("uPointLights").append("[").append(i).append("]").append(".");
+
+            mLightingHandles[9+count++] = GLES20.glGetUniformLocation(mProgramId, builder.toString()+"base.color");
+            mLightingHandles[9+count++] = GLES20.glGetUniformLocation(mProgramId, builder.toString()+"base.ambientIntensity");
+            mLightingHandles[9+count++] = GLES20.glGetUniformLocation(mProgramId, builder.toString()+"base.diffuseIntensity");
+
+            mLightingHandles[9+count++] = GLES20.glGetUniformLocation(mProgramId, builder.toString()+"position");
+
+            mLightingHandles[9+count++] = GLES20.glGetUniformLocation(mProgramId, builder.toString()+"attenuation.constant");
+            mLightingHandles[9+count++] = GLES20.glGetUniformLocation(mProgramId, builder.toString()+"attenuation.linear");
+            mLightingHandles[9+count++] = GLES20.glGetUniformLocation(mProgramId, builder.toString()+"attenuation.exponetial");
+
+        }
 
         mShape.loadBuffers();
         mShape.setTexture(new ASTCTexture());
         mShape.loadTexture(R.raw.test4x4astc);
 
         mPipeline.setScale(new float[]{1.0f,1.0f,1.0f});
-        mPipeline.setRotate(90,new float[]{1.0f,0.0f,0.0f});
-        mPipeline.setTranslate(new float[]{0.0f, 0.0f, -1.0f});
-        mPipeline.mCamera.setCamera(new float[]{5.0f,1.0f,-3.0f},new float[]{0.0f,0.0f,1.0f},new float[]{0.0f,1.0f,0.0f});
-        mLighting.setDirectionLightData(0.00f,new float[]{1.0f,1.0f,1.0f},new float[]{0.0f,0.0f,1.0f});
-        mLighting.setSpecularLightData(1f,32f,mPipeline.mCamera.getEyeMatrix());
+        mPipeline.mCamera.setCamera(new float[]{5.0f,1.0f,-3.0f},new float[]{1.0f,1.0f,45.0f},new float[]{0.0f,1.0f,0.0f});
 
+        mLighting.setDirectionLightData(0.00f,new float[]{1.0f,1.0f,1.0f},new float[]{0.0f,0.0f,1.0f});
+        mLighting.setSpecularLightData(0f,0.0f,mPipeline.mCamera.getEyeMatrix());
+        mLighting.setNumberOfPointLights(pointLightCount);
+        mLighting.addPointLight(new float[]{1.0f,0.5f,0.0f},new float[]{0.0f,0.1f},new float[]{-3.0f,1.0f,-10.0f},new float[]{0.0f,0.1f,0.0f});
+        mLighting.addPointLight(new float[]{0.0f,0.5f,1.0f},new float[]{0.0f,0.5f},new float[]{0.0f,1.0f,-10.0f},new float[]{0.0f,0.1f,0.0f});
+
+        GLES20.glUniformMatrix4fv(mMMatrixHandle,1,false,mPipeline.getModelMatrix(false,false,false),0);
     }
 
 
@@ -116,13 +155,18 @@ public class myRenderer20 extends myRenderer {
     @Override
     public void onDrawFrame(GL10 gl10) {
 
+
+
         GLES20.glClear( GLES20.GL_COLOR_BUFFER_BIT);
         GLES20.glUseProgram(mProgramId);
 
         GLES20.glEnable(GLES20.GL_CULL_FACE);
         GLES20.glCullFace(GLES20.GL_BACK);
+        val +=0.01f;
+        float newZ = new Double(20.0f*Math.sin(val)).floatValue();
+        mLighting.updatePointLight(1,new float[]{3.0f,1.0f,newZ});
+        mLighting.updateSpecularLightPosition(mPipeline.mCamera.getEyeMatrix());
 
-        GLES20.glUniformMatrix4fv(mMMatrixHandle,1,false,mPipeline.getModelMatrix(false,false,false),0);
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle,1,false,mPipeline.getMatrix(false,false,false),0);
         mLighting.doLighting(mLightingHandles);
         mShape.draw(mVertexDataHandle,-1,mNormalDataHandle,mTextureSamplerHandle,mTextureCoordHandle);

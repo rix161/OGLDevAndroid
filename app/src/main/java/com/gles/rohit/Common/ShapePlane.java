@@ -25,7 +25,7 @@ public class ShapePlane implements Shape {
                     new float[]{0.0f,1.0f,0.0f},
                     new float[]{0.0f,0.0f}),
             new Vertex(
-                    new float[]{0.0f, planeDepth, 0.0f},
+                    new float[]{0.0f, 0.0f, planeDepth},
                     new float[]{0.0f,1.0f,0.0f,1.0f},
                     new float[]{0.0f,1.0f,0.0f},
                     new float[]{0.0f,1.0f}),
@@ -35,7 +35,7 @@ public class ShapePlane implements Shape {
                     new float[]{0.0f,1.0f,0.0f},
                     new float[]{1.0f,0.0f}),
             new Vertex(
-                    new float[]{planeWidth,planeDepth, 0.0f},
+                    new float[]{planeWidth,0.0f,planeDepth},
                     new float[]{1.0f,1.0f,1.0f,1.0f},
                     new float[]{0.0f,1.0f,0.0f},
                     new float[]{1.0f,1.0f})

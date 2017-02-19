@@ -52,7 +52,7 @@ public class myRenderer18 extends myRenderer {
     private Shape mShape;
     private Lighting mLighting;
 
-    private final int TOTAL_LIGHTING_HANDLE = 2+3;
+    private final int TOTAL_LIGHTING_HANDLE = 2+4;
 
     @Override
     public void updateCamera(int buttonId){
