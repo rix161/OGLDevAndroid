@@ -4,6 +4,7 @@ import android.opengl.GLES20;
 import android.util.Log;
 
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * Created by Rohith on 24-09-2016.
@@ -290,7 +291,7 @@ public class Lighting {
         SpotLight(float[] color, float[] intensity, float[] position, float[] atten,float[] direction,float cutoff) {
             super(color, intensity, position, atten);
             this.direction = direction;
-            this.cutoff = cutoff;
+            this.cutoff = (float)Math.cos(Math.toRadians(cutoff));
         }
 
         float[] getDirection(){ return  direction;}

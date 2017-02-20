@@ -166,9 +166,9 @@ public class myRenderer21 extends myRenderer {
         mLighting.addPointLight(new float[]{0.0f,0.5f,1.0f},new float[]{0.0f,0.1f},new float[]{3.0f,1.0f,-10.0f},new float[]{0.0f,0.1f,0.0f});
 
         mLighting.setNumberOfSpotLights(spotLightCount);
-        mLighting.addSpotLight(new float[]{1.0f,1.0f,1.0f},new float[]{0.0f,0.2f}
+        mLighting.addSpotLight(new float[]{1.0f,1.0f,1.0f},new float[]{0.0f,0.9f}
                                ,new float[]{-1.0f,1.0f,-10.0f},new float[]{0.0f,0.1f,0.0f}
-                               ,new float[]{0.0f,-1.0f,0.0f},2.0f);
+                               ,new float[]{0.0f,-1.0f,0.0f},20.0f);
 
         GLES20.glUniformMatrix4fv(mMMatrixHandle,1,false,mPipeline.getModelMatrix(false,false,false),0);
     }
@@ -194,7 +194,7 @@ public class myRenderer21 extends myRenderer {
         GLES20.glCullFace(GLES20.GL_BACK);
         val +=0.01f;
         float newZ = new Double(20.0f*Math.sin(val)).floatValue();
-        float newZ2 = new Double(20.0f*Math.cos(val+0.03)).floatValue();
+        float newZ2 = new Double(20.0f*Math.cos(val+0.001)).floatValue();
         mLighting.updatePointLight(1,new float[]{3.0f,1.0f,newZ});
         mLighting.updateSpotLight(0,new float[]{-1.0f,1.0f,newZ2});
         mLighting.updateSpecularLightPosition(mPipeline.mCamera.getEyeMatrix());

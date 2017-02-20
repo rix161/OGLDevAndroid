@@ -98,9 +98,9 @@ vec4 CalcPointLight(pointLight pLight){
 vec4 CalcSpotLight(int i){
 
     vec3 lightToPixel = normalize(vWorldPos - uSpotLights[i].pointbase.position);
-    float spotLightFactor = dot(lightToPixel,uSpotLights[i].direction);
+    float spotLightFactor = dot(lightToPixel,normalize(uSpotLights[i].direction));
 
-    if(spotLightFactor < uSpotLights[i].cutoff){
+    if( spotLightFactor > uSpotLights[i].cutoff){
         vec4 totalLight = CalcPointLight(uSpotLights[i].pointbase);
 
         float d = (1.0)/(1.0 - uSpotLights[i].cutoff);
