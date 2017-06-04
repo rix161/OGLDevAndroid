@@ -24,7 +24,7 @@ public class myRenderer22 extends myRenderer {
     public myRenderer22(Context context) {
         super(context);
         mContext = context;
-
+        //mShape = new ShapePlane(mContext);
         try {
             mShape = new ShapeModel(mContext,"Model.md2");
         } catch (IOException e) {
@@ -157,11 +157,12 @@ public class myRenderer22 extends myRenderer {
 
         }
 
-
         mShape.loadBuffers();
+        mShape.setTexture(new ASTCTexture());
+        mShape.loadTexture(R.raw.test4x4astc);
 
-        mPipeline.setScale(new float[]{1.0f,1.0f,1.0f});
-        mPipeline.mCamera.setCamera(new float[]{5.0f,1.0f,-3.0f},new float[]{1.0f,1.0f,45.0f},new float[]{0.0f,1.0f,0.0f});
+        mPipeline.setScale(new float[]{0.1f,0.1f,0.1f});
+        mPipeline.mCamera.setCamera(new float[]{3.0f,7.0f,-10.0f},new float[]{0.0f,-0.2f,1.0f},new float[]{0.0f,1.0f,0.0f});
 
         mLighting.setDirectionLightData(0.00f,new float[]{1.0f,1.0f,1.0f},new float[]{0.0f,0.0f,1.0f});
         mLighting.setSpecularLightData(0f,0.0f,mPipeline.mCamera.getEyeMatrix());

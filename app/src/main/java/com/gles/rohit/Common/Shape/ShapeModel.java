@@ -11,7 +11,6 @@ import com.gles.rohit.Common.jassimp2.AiPostProcessSteps;
 import com.gles.rohit.Common.jassimp2.AiScene;
 import com.gles.rohit.Common.jassimp2.AiTextureType;
 import com.gles.rohit.Common.jassimp2.Jassimp;
-import com.gles.rohit.ogldevandroid.BuildConfig;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -40,9 +39,10 @@ public class ShapeModel implements Shape {
 
     private int mVextexDataSize = 3;
     private int mNormalDataSize = 3;
-    private int mColorDataSize = 0;
+    private int mColorDataSize = 4;
     private int mTextureDataSize = 2;
     private int mStride = (mVextexDataSize+mNormalDataSize+mColorDataSize+mTextureDataSize)*4;
+
 
 
     public ShapeModel(Context context, String fileName) throws IOException {
@@ -130,10 +130,11 @@ public class ShapeModel implements Shape {
                 GLES20.glVertexAttribPointer(textureCoordHandle, mTextureDataSize, GLES20.GL_FLOAT, false, mStride, (mVextexDataSize + mColorDataSize + mNormalDataSize) * 4);
             }
             GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, mBuffer[i][1]);
-            GLES20.glDrawElements(GLES20.GL_TRIANGLES, mMeshs.get(i).getIndexBuffer().capacity(), GLES20.GL_UNSIGNED_INT, 0);
+            GLES20.glDrawElements(GLES20.GL_TRIANGLES,mMeshs.get(i).getIndicesCount(), GLES20.GL_UNSIGNED_INT, 0);
             GLES20.glDisableVertexAttribArray(vertexDataHandle);
-            GLES20.glDisableVertexAttribArray(colorHandle);
+            GLES20.glDisableVertexAttribArray(normalHandle);
             GLES20.glDisableVertexAttribArray(textureCoordHandle);
+
         }
     }
 
@@ -158,7 +159,7 @@ public class ShapeModel implements Shape {
         private int mMaterialIndex;
         private FloatBuffer mVertexBuffer;
         private IntBuffer mIndexBuffer;
-        int posCount, normalCount,textureCount,colorCount;
+        private int mNumIndices;
 
         MeshEntry(AiMesh mesh){
 
@@ -169,11 +170,8 @@ public class ShapeModel implements Shape {
 
         }
 
-        int getPosCount(){return posCount;}
-        int getNormalCount(){return normalCount;}
-        int getTextureCount(){return textureCount;}
-        int getColorCount(){return colorCount;}
-        int getMaterialIndex(){return mMaterialIndex;}
+        public int getMaterialIndex(){return mMaterialIndex;}
+        public int getIndicesCount(){return mNumIndices;}
 
         public FloatBuffer getVertexBuffer() {
             return mVertexBuffer;
@@ -184,33 +182,62 @@ public class ShapeModel implements Shape {
         }
 
         private void initVertexBuffer(AiMesh mesh){
+            Vector<Float> interBuffer = new Vector<>();
 
-            int capPosition = mesh.hasPositions()?mesh.getPositionBuffer().capacity():0;
-            int capNormal = mesh.hasNormals()?mesh.getNormalBuffer().capacity():0;
-            int capTexture = mesh.hasTexCoords(0)?mesh.getTexCoordBuffer(0).capacity():0;
-            int capColor = mesh.hasVertexColors()?mesh.getColorBuffer(4).capacity():0;
+            interBuffer.addAll(getMeshData(mesh));
 
+            float interBufferRaw[] = new float[interBuffer.size()];
+            for(int i=0;i<interBuffer.size();i++)
+                interBufferRaw[i] = interBuffer.elementAt(i).floatValue();
 
-            mVertexBuffer = ByteBuffer.allocateDirect((capPosition+capNormal+capTexture+capColor)*4).order(ByteOrder.nativeOrder()).asFloatBuffer();
-            if(mesh.hasPositions())
-                mVertexBuffer.put(mesh.getPositionBuffer());
+            mVertexBuffer = ByteBuffer.allocateDirect(interBufferRaw.length*4).order(ByteOrder.nativeOrder()).asFloatBuffer();
+            mVertexBuffer.put(interBufferRaw).position(0);
 
-            if(mesh.hasNormals())
-                mVertexBuffer.put(mesh.getNormalBuffer());
+        }
 
-            if(mesh.hasColors(4))
-                mVertexBuffer.put(mesh.getColorBuffer(4));
+        private Vector<Float> getMeshData(AiMesh mesh) {
+            Vector<Float> interBuffer = new Vector<>();
+            Vector<Float> temp = new Vector<>();
+            Float[] zero2D = new Float[]{0f,0f};
+            Float[] zero3D = new Float[]{0f,0f,0f};
+            Float[] zero4D = new Float[]{1f,1f,1f,0f};
 
-            if(mesh.hasTexCoords(0))
-                mVertexBuffer.put(mesh.getTexCoordBuffer(0));
-            mVertexBuffer.position(0);
+            for(int i=0;i<mesh.getNumVertices();i++){
+                Float[]vertexPos = mesh.hasPositions()?new Float[]{mesh.getPositionX(i),mesh.getPositionY(i),mesh.getPositionZ(i)}:zero3D;
+                for(Float pos:vertexPos)
+                    interBuffer.add(pos);
+
+                Float[]vertexColor = mesh.hasColors(4)?new Float[]{mesh.getColorR(i,4),mesh.getColorG(i,4),mesh.getColorB(i,4),mesh.getColorA(i,4)}:zero4D;
+                for(Float color:vertexColor)
+                    interBuffer.add(color);
+
+                Float[]vertexNormal = mesh.hasNormals()?new Float[]{mesh.getNormalX(i),mesh.getNormalY(i),mesh.getNormalZ(i)}:zero3D;
+                for(Float normal:vertexNormal)
+                    interBuffer.add(normal);
+
+                Float[]vertexTexCoord = mesh.hasTexCoords(0)?new Float[]{mesh.getTexCoordU(i,0),mesh.getTexCoordV(i,0)}:zero2D;
+                for(Float texCoord:vertexTexCoord)
+                    interBuffer.add(texCoord);
+
+                /*Log.e("GFX","Data of Vertex:"+i);
+                Log.e("GFX","VertexPos x:"+vertexPos[0]+" Y:"+vertexPos[1]+" Z:"+vertexPos[2]);
+                Log.e("GFX","Texture x:"+vertexTexCoord[0]+" Y:"+vertexTexCoord[1]);
+                Log.e("GFX","Normal x:"+vertexNormal[0]+" Y:"+vertexNormal[1]+" Z:"+vertexNormal[2]);*/
+            }
+            return  interBuffer;
         }
 
         private void initIndexBuffer(AiMesh mesh){
 
+            mNumIndices = mesh.getNumFaces()*3;
+
             if(mesh.isPureTriangle())
                 mIndexBuffer = mesh.getIndexBuffer();
+            for(int i=0;i<mIndexBuffer.capacity();i++){
+                Log.e("GFX","mIndexBuffer"+i+":"+mIndexBuffer.get(i));
+            }
 
+            /*Log.e("GFX"," NumIndices:"+mNumIndices+" mIndexCap:"+mIndexBuffer.capacity()+" mIndexCap2:"+mIndexBuffer.capacity()*4);*/
         }
     }
 }

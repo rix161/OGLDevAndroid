@@ -22,7 +22,7 @@ public class Lighting {
     private int mNumSpotLights;
 
     public Lighting(){
-        mAmbiIntensity = 0.0f;
+        mAmbiIntensity = 1.0f;
         mAmbiColor = new float[]{1.0f,1.0f,1.0f};
         mPointLights = new LinkedList<>();
         mSpotLights = new LinkedList<>();
