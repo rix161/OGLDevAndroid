@@ -22,7 +22,7 @@ public class Lighting {
     private int mNumSpotLights;
 
     public Lighting(){
-        mAmbiIntensity = 1.0f;
+        mAmbiIntensity = 0.0f;
         mAmbiColor = new float[]{1.0f,1.0f,1.0f};
         mPointLights = new LinkedList<>();
         mSpotLights = new LinkedList<>();
@@ -30,6 +30,7 @@ public class Lighting {
         mNumSpotLights = 0;
     }
 
+    public void setAmbientIntensity(float intensity){mAmbiIntensity = intensity;}
     public void addPointLight(float[] color,float[] intensity,float[] pos,float[] attenuation ){
 
         if(mPointLights.size() >= mNumPointLights) return;

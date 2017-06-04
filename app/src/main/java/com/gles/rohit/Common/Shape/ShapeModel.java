@@ -82,11 +82,11 @@ public class ShapeModel implements Shape {
         for(int i=0;i<mMeshs.size();i++){
             GLES20.glGenBuffers(numberOfVBOS,mBuffer[i],0);
             GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER,mBuffer[i][0]);
-            GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER,mBuffer[i][0],mMeshs.get(i).getVertexBuffer(),GLES20.GL_STATIC_DRAW);
+            GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER,mMeshs.get(i).getVertexBuffer().capacity()*4,mMeshs.get(i).getVertexBuffer(),GLES20.GL_STATIC_DRAW);
             GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER,0);
 
             GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER,mBuffer[i][1]);
-            GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER,mBuffer[i][1],mMeshs.get(i).getIndexBuffer(),GLES20.GL_STATIC_DRAW);
+            GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER,mMeshs.get(i).getIndexBuffer().capacity()*4,mMeshs.get(i).getIndexBuffer(),GLES20.GL_STATIC_DRAW);
             GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER,0);
         }
 
@@ -197,7 +197,7 @@ public class ShapeModel implements Shape {
 
         private Vector<Float> getMeshData(AiMesh mesh) {
             Vector<Float> interBuffer = new Vector<>();
-            Vector<Float> temp = new Vector<>();
+
             Float[] zero2D = new Float[]{0f,0f};
             Float[] zero3D = new Float[]{0f,0f,0f};
             Float[] zero4D = new Float[]{1f,1f,1f,0f};
@@ -218,11 +218,6 @@ public class ShapeModel implements Shape {
                 Float[]vertexTexCoord = mesh.hasTexCoords(0)?new Float[]{mesh.getTexCoordU(i,0),mesh.getTexCoordV(i,0)}:zero2D;
                 for(Float texCoord:vertexTexCoord)
                     interBuffer.add(texCoord);
-
-                /*Log.e("GFX","Data of Vertex:"+i);
-                Log.e("GFX","VertexPos x:"+vertexPos[0]+" Y:"+vertexPos[1]+" Z:"+vertexPos[2]);
-                Log.e("GFX","Texture x:"+vertexTexCoord[0]+" Y:"+vertexTexCoord[1]);
-                Log.e("GFX","Normal x:"+vertexNormal[0]+" Y:"+vertexNormal[1]+" Z:"+vertexNormal[2]);*/
             }
             return  interBuffer;
         }
@@ -233,9 +228,6 @@ public class ShapeModel implements Shape {
 
             if(mesh.isPureTriangle())
                 mIndexBuffer = mesh.getIndexBuffer();
-            for(int i=0;i<mIndexBuffer.capacity();i++){
-                Log.e("GFX","mIndexBuffer"+i+":"+mIndexBuffer.get(i));
-            }
 
             /*Log.e("GFX"," NumIndices:"+mNumIndices+" mIndexCap:"+mIndexBuffer.capacity()+" mIndexCap2:"+mIndexBuffer.capacity()*4);*/
         }

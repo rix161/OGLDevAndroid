@@ -87,6 +87,10 @@ public class myRenderer22 extends myRenderer {
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
 
+        GLES20.glEnable(GLES20.GL_CULL_FACE);
+        GLES20.glCullFace(GLES20.GL_BACK);
+        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
+
         mVShaderId = ShaderHelper.generateShader(GLES20.GL_VERTEX_SHADER, FileReader.readTextFileFromRawResource(mContext, R.raw.tutorial19vs));
         mFShaderId = ShaderHelper.generateShader(GLES20.GL_FRAGMENT_SHADER, FileReader.readTextFileFromRawResource(mContext,R.raw.tutorial21fs));
         if(mVShaderId == -1 || mFShaderId == -1){
@@ -162,8 +166,9 @@ public class myRenderer22 extends myRenderer {
         mShape.loadTexture(R.raw.test4x4astc);
 
         mPipeline.setScale(new float[]{0.1f,0.1f,0.1f});
-        mPipeline.mCamera.setCamera(new float[]{3.0f,7.0f,-10.0f},new float[]{0.0f,-0.2f,1.0f},new float[]{0.0f,1.0f,0.0f});
+        mPipeline.mCamera.setCamera(new float[]{0.0f,7.0f,-15.0f},new float[]{0.0f,-0.2f,1.0f},new float[]{0.0f,1.0f,0.0f});
 
+        mLighting.setAmbientIntensity(1.0f);
         mLighting.setDirectionLightData(0.00f,new float[]{1.0f,1.0f,1.0f},new float[]{0.0f,0.0f,1.0f});
         mLighting.setSpecularLightData(0f,0.0f,mPipeline.mCamera.getEyeMatrix());
 
@@ -193,11 +198,9 @@ public class myRenderer22 extends myRenderer {
 
 
 
-        GLES20.glClear( GLES20.GL_COLOR_BUFFER_BIT);
+        GLES20.glClear( GLES20.GL_COLOR_BUFFER_BIT|GLES20.GL_DEPTH_BUFFER_BIT);
         GLES20.glUseProgram(mProgramId);
 
-        GLES20.glEnable(GLES20.GL_CULL_FACE);
-        GLES20.glCullFace(GLES20.GL_BACK);
         val +=0.01f;
         float newZ = new Double(20.0f*Math.sin(val)).floatValue();
         float newZ2 = new Double(20.0f*Math.cos(val+0.001)).floatValue();
