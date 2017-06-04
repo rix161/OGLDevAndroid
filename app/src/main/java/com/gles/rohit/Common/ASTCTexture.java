@@ -17,7 +17,7 @@ public class ASTCTexture extends Texture {
     private int mHeight;
     private int HEADER_SIZE =16;
 
-    protected int loadTexture(Context context, int resID){
+    public int loadTexture(Context context, int resID){
         InputStream mInputStream = context.getResources().openRawResource(resID);
         byte []buffer = Utils.inputStreamToByteBuffer(mInputStream);
 

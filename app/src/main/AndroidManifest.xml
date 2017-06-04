@@ -8,6 +8,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
         <activity android:name=".OglDevAndroid">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +38,8 @@
         <activity android:name="com.gles.rohit.Tutorial18.Tutorial18" />
         <activity android:name="com.gles.rohit.Tutorial19.Tutorial19" />
         <activity android:name="com.gles.rohit.Tutorial20.Tutorial20" />
-        <activity android:name="com.gles.rohit.Tutorial21.Tutorial21"></activity>
+        <activity android:name="com.gles.rohit.Tutorial21.Tutorial21" />
+        <activity android:name="com.gles.rohit.Tutorial22.Tutorial22"></activity>
     </application>
 
 </manifest>

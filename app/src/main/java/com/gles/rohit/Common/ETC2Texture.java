@@ -21,7 +21,7 @@ public class ETC2Texture extends Texture {
     private int HEADER_SIZE = 16;
 
     @Override
-    protected int loadTexture(Context context, int resID){
+    public int loadTexture(Context context, int resID){
         InputStream mInputStream = context.getResources().openRawResource(resID);
         byte []buffer = Utils.inputStreamToByteBuffer(mInputStream);
         if(buffer!=null && buffer.length!=0){

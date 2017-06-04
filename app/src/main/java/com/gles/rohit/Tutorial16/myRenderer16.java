@@ -8,8 +8,8 @@ import android.util.Log;
 
 import com.gles.rohit.Common.FileReader;
 import com.gles.rohit.Common.ShaderHelper;
-import com.gles.rohit.Common.Shape;
-import com.gles.rohit.Common.ShapePyramid;
+import com.gles.rohit.Common.Shape.Shape;
+import com.gles.rohit.Common.Shape.ShapePyramid;
 import com.gles.rohit.Common.TransPipeline;
 import com.gles.rohit.ogldevandroid.R;
 

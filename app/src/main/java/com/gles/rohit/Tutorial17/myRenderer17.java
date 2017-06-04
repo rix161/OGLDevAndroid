@@ -3,15 +3,14 @@ package com.gles.rohit.Tutorial17;
 import android.content.Context;
 
 import android.opengl.GLES20;
-import android.opengl.GLSurfaceView;
 import android.util.Log;
 
 import com.gles.rohit.Common.ETC2Texture;
 import com.gles.rohit.Common.FileReader;
 import com.gles.rohit.Common.Lighting;
 import com.gles.rohit.Common.ShaderHelper;
-import com.gles.rohit.Common.Shape;
-import com.gles.rohit.Common.ShapePyramid;
+import com.gles.rohit.Common.Shape.Shape;
+import com.gles.rohit.Common.Shape.ShapePyramid;
 import com.gles.rohit.Common.TransPipeline;
 import com.gles.rohit.Common.myRenderer;
 import com.gles.rohit.ogldevandroid.R;
