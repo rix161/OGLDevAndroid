@@ -25,6 +25,7 @@ import com.gles.rohit.Tutorial2.Tutorial2;
 import com.gles.rohit.Tutorial20.Tutorial20;
 import com.gles.rohit.Tutorial21.Tutorial21;
 import com.gles.rohit.Tutorial22.Tutorial22;
+import com.gles.rohit.Tutorial23.Tutorial23;
 import com.gles.rohit.Tutorial3.Tutorial3;
 import com.gles.rohit.Tutorial4.Tutorial4;
 import com.gles.rohit.Tutorial5.Tutorial5;
@@ -176,6 +177,11 @@ public class OglDevProgramList extends ArrayAdapter<String> {
 
             case 22:
                 intent = new Intent(mContext, Tutorial22.class);
+                mContext.startActivity(intent);
+                break;
+
+            case 23:
+                intent = new Intent(mContext, Tutorial23.class);
                 mContext.startActivity(intent);
                 break;
 

@@ -1,10 +1,8 @@
-package com.gles.rohit.Common;
+package com.gles.rohit.Common.LightingPackage;
 
 import android.opengl.GLES20;
-import android.util.Log;
 
 import java.util.LinkedList;
-import java.util.Map;
 
 /**
  * Created by Rohith on 24-09-2016.
@@ -44,6 +42,12 @@ public class Lighting {
         if(mSpotLights.size() >= mNumSpotLights) return;
 
         mSpotLights.add(new SpotLight(color,intensity,pos,attenuation,direction,cutoff));
+
+    }
+
+    public SpotLight getSpotLight(int index){
+        if(mSpotLights.size()<index) return null;
+        return mSpotLights.get(index);
 
     }
 
@@ -125,7 +129,7 @@ public class Lighting {
 
 
     private void setSpecularData(int[] handles) {
-        if(handles.length>6) {
+        if(handles.length>6 && mSpecularData!=null) {
             GLES20.glUniform1f(handles[6], mSpecularData.getIntensity());
             GLES20.glUniform1f(handles[7], mSpecularData.getPower());
             GLES20.glUniform3fv(handles[8], 1, mSpecularData.getEyePosition(), 0);
@@ -191,112 +195,4 @@ public class Lighting {
 
     public void setNumberOfSpotLights(int spotLightCount) { mNumSpotLights = spotLightCount;}
 
-    private class DirectionalLights {
-
-        private float mDirIntensityAmbi;
-        private float mDirIntensityDiffuse;
-        private float[] mDirColor;
-        private float[] mDirDirection;
-
-        DirectionalLights(float AmbiIntensity,float DiffuseIntensity,float[] direction,float[] color){
-            mDirIntensityAmbi = AmbiIntensity;
-            mDirIntensityDiffuse = DiffuseIntensity;
-            mDirDirection = direction;
-            mDirColor = color;
-        }
-
-        DirectionalLights(float AmbiIntensity,float[] direction,float[] color){
-            mDirIntensityAmbi = AmbiIntensity;
-            mDirIntensityDiffuse = 1;
-            mDirDirection = direction;
-            mDirColor = color;
-        }
-
-        public float getAmbiIntensity(){return mDirIntensityAmbi;}
-        public float getDiffuseIntensity(){return mDirIntensityDiffuse;}
-
-        public float[] getPosition(){return mDirDirection;}
-        public float[] getColor(){return mDirColor;}
-
-    }
-
-    private class SpecularData {
-
-        private float mIntensity;
-        private float mPower;
-        private float[] eyePosition;
-
-        SpecularData(float intensity,float power,float[] eye){
-            mIntensity = intensity;
-            mPower = power;
-            eyePosition = eye;
-        }
-
-        public float getIntensity(){return mIntensity;}
-        public float getPower(){ return mPower;}
-        public float[] getEyePosition(){ return eyePosition;}
-        public void setEyePosition(float[]pos){ eyePosition = pos;}
-    }
-
-
-    private class PointLight{
-
-        private float mColor[];
-        private float mIntensity[];
-        private float mAttenuation[];
-        private float mPosition[];
-
-        PointLight(float color[],float intensity[],float[] position,float atten[]){
-            mColor = color;
-            mIntensity = intensity;
-            mPosition = position;
-            mAttenuation = atten;
-        }
-
-        float[] getColor(){
-            return  mColor;
-        }
-
-        float[] getAttenuation(){
-            return mAttenuation;
-
-        }
-
-        float getAmbientIntensity(){
-            if(mIntensity!=null)
-                return mIntensity[0];
-            return 0;
-        }
-
-        float getDiffuseIntensity(){
-            if(mIntensity!=null)
-                return mIntensity[1];
-            return 0;
-        }
-
-        float[] getPosition(){
-            return  mPosition;
-        }
-
-        void updatePosition(float[] pos){
-            mPosition = pos;
-        }
-    };
-
-
-    private class SpotLight extends PointLight {
-
-        private  float[] direction;
-        private float cutoff;
-
-        SpotLight(float[] color, float[] intensity, float[] position, float[] atten,float[] direction,float cutoff) {
-            super(color, intensity, position, atten);
-            this.direction = direction;
-            this.cutoff = (float)Math.cos(Math.toRadians(cutoff));
-        }
-
-        float[] getDirection(){ return  direction;}
-
-        float getCutoff(){ return cutoff;}
-    }
 }

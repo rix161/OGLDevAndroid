@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.gles.rohit.Common.ETC2Texture;
 import com.gles.rohit.Common.FileReader;
-import com.gles.rohit.Common.Lighting;
+import com.gles.rohit.Common.LightingPackage.Lighting;
 import com.gles.rohit.Common.ShaderHelper;
 import com.gles.rohit.Common.Shape.Shape;
 import com.gles.rohit.Common.Shape.ShapePyramid;

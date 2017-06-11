@@ -23,5 +23,6 @@
         <item>Tutorial 20: Point Lighting</item>
         <item>Tutorial 21: Spot Lighting</item>
         <item>Tutorial 22: ASSIMP</item>
+        <item>Tutorial 23: Shadow Mapping I</item>
     </string-array>
 </resources>

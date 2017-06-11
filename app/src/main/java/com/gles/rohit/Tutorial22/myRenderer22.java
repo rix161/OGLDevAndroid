@@ -6,11 +6,10 @@ import android.util.Log;
 
 import com.gles.rohit.Common.ASTCTexture;
 import com.gles.rohit.Common.FileReader;
-import com.gles.rohit.Common.Lighting;
+import com.gles.rohit.Common.LightingPackage.Lighting;
 import com.gles.rohit.Common.ShaderHelper;
 import com.gles.rohit.Common.Shape.Shape;
 import com.gles.rohit.Common.Shape.ShapeModel;
-import com.gles.rohit.Common.Shape.ShapePlane;
 import com.gles.rohit.Common.TransPipeline;
 import com.gles.rohit.Common.myRenderer;
 import com.gles.rohit.ogldevandroid.R;
