@@ -84,7 +84,6 @@ public class myRenderer23 extends myRenderer {
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
 
         GLES20.glEnable(GLES20.GL_CULL_FACE);
-        GLES20.glCullFace(GLES20.GL_BACK);
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
         mShapeModel.loadBuffers();
@@ -92,8 +91,8 @@ public class myRenderer23 extends myRenderer {
 
         mLighting.setNumberOfSpotLights(spotLightCount);
         mLighting.addSpotLight(new float[]{1.0f,1.0f,1.0f},new float[]{0.0f,0.9f}
-                ,new float[]{-1.0f,1.0f,-10.0f},new float[]{0.0f,0.1f,0.0f}
-                ,new float[]{0.0f,-1.0f,0.0f},20.0f);
+                ,new float[]{-20.0f,20.0f,5.0f},new float[]{0.0f,0.01f,0.0f}
+                ,new float[]{1.0f,-1.0f,0.0f},20.0f);
 
 
         mShadowMappingFBO.init();
@@ -152,7 +151,7 @@ public class myRenderer23 extends myRenderer {
 
         GLES20.glUniform1i(mShadowMappingTech.getTextureSamplerHandle(),0);
         mShadowMappingFBO.BindForReading(GLES20.GL_TEXTURE0);
-        mShapePlane.draw(mShadowMappingTech.getPositionHandle(),-1,-1,mShadowMappingTech.getTextureCoordHandle(),mShadowMappingTech.getTextureSamplerHandle());
+        mShapePlane.draw(mShadowMappingTech.getPositionHandle(),-1,-1,mShadowMappingTech.getTextureSamplerHandle(),mShadowMappingTech.getTextureCoordHandle());
     }
 
     public void onDestroy(){

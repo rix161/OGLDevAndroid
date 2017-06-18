@@ -131,8 +131,12 @@ public class ShapeModel implements Shape {
             }
             GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, mBuffer[i][1]);
             GLES20.glDrawElements(GLES20.GL_TRIANGLES,mMeshs.get(i).getIndicesCount(), GLES20.GL_UNSIGNED_INT, 0);
-            GLES20.glDisableVertexAttribArray(vertexDataHandle);
-            GLES20.glDisableVertexAttribArray(normalHandle);
+
+            if(vertexDataHandle!=-1)
+                GLES20.glDisableVertexAttribArray(vertexDataHandle);
+            if(normalHandle!=-1)
+                GLES20.glDisableVertexAttribArray(normalHandle);
+            if(textureCoordHandle!=-1)
             GLES20.glDisableVertexAttribArray(textureCoordHandle);
 
         }
