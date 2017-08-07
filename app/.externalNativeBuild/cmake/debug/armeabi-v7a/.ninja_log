@@ -1,10 +1,4 @@
 # ninja log v5
-0	965	0	CMakeFiles/jassimp.dir/src/main/cpp/jassimp2/memory_file.cpp.o	81587136ca20cc92
-0	1152	0	CMakeFiles/jassimp.dir/src/main/cpp/jassimp2/jassimp.cpp.o	648daba695a0cbd1
-1153	1219	0	../../../../build/intermediates/cmake/debug/obj/armeabi-v7a/libjassimp.so	469bf94bfad8cd6
-1	235	0	CMakeFiles/jassimp.dir/src/main/cpp/jassimp2/memory_file.cpp.o	81587136ca20cc92
-1	473	0	CMakeFiles/jassimp.dir/src/main/cpp/jassimp2/jassimp.cpp.o	648daba695a0cbd1
-474	493	0	../../../../build/intermediates/cmake/debug/obj/armeabi-v7a/libjassimp.so	469bf94bfad8cd6
-1	260	0	CMakeFiles/jassimp.dir/src/main/cpp/jassimp2/memory_file.cpp.o	81587136ca20cc92
-1	443	0	CMakeFiles/jassimp.dir/src/main/cpp/jassimp2/jassimp.cpp.o	648daba695a0cbd1
-443	462	0	../../../../build/intermediates/cmake/debug/obj/armeabi-v7a/libjassimp.so	469bf94bfad8cd6
+0	225	0	CMakeFiles/jassimp.dir/src/main/cpp/jassimp2/memory_file.cpp.o	85973d57ee3b0c67
+0	417	0	CMakeFiles/jassimp.dir/src/main/cpp/jassimp2/jassimp.cpp.o	709de77c2231d6e7
+417	440	0	../../../../build/intermediates/cmake/debug/obj/armeabi-v7a/libjassimp.so	4bf127853cdb7456

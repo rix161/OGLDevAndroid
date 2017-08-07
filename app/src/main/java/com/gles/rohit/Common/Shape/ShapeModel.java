@@ -73,6 +73,7 @@ public class ShapeModel implements Shape {
         for(AiMaterial material:mScene.getMaterials()){
             for(int i=0;i<material.getNumTextures(AiTextureType.DIFFUSE);i++) {
                 String textureFile = material.getTextureFile(AiTextureType.DIFFUSE,i);
+                Log.e("GFX","TextureFile:"+textureFile);
                 Texture tFile = new Texture();
                 tFile.loadTexture(mContext,textureFile);
                 mMeshTextures.add(tFile);
@@ -121,14 +122,17 @@ public class ShapeModel implements Shape {
             if(mMeshs.get(i).getMaterialIndex()<mMeshTextures.size())
                 textureID = mMeshTextures.get(mMeshs.get(i).getMaterialIndex()).getTextureId();
 
-            if (textureCoordHandle != -1 || textureID != -1) {
+            if (textureID != -1) {
                 GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
                 GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureID);
                 GLES20.glUniform1i(textureUniformHandle, 0);
+            }
 
+            if(textureCoordHandle!=-1){
                 GLES20.glEnableVertexAttribArray(textureCoordHandle);
                 GLES20.glVertexAttribPointer(textureCoordHandle, mTextureDataSize, GLES20.GL_FLOAT, false, mStride, (mVextexDataSize + mColorDataSize + mNormalDataSize) * 4);
             }
+
             GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, mBuffer[i][1]);
             GLES20.glDrawElements(GLES20.GL_TRIANGLES,mMeshs.get(i).getIndicesCount(), GLES20.GL_UNSIGNED_INT, 0);
 
@@ -137,7 +141,7 @@ public class ShapeModel implements Shape {
             if(normalHandle!=-1)
                 GLES20.glDisableVertexAttribArray(normalHandle);
             if(textureCoordHandle!=-1)
-            GLES20.glDisableVertexAttribArray(textureCoordHandle);
+                GLES20.glDisableVertexAttribArray(textureCoordHandle);
 
         }
     }

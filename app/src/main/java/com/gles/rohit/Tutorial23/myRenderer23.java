@@ -52,14 +52,14 @@ public class myRenderer23 extends myRenderer {
         mPipeline = new TransPipeline();
         mLighting = new Lighting();
 
-        mShadowMappingTech = new ShadowMappingTechnique(mContext);
-        mShadowMappingFBO = new ShadowMappingFBO(mWidth,mHeight,mContext);
-
         WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
         mWidth = displayMetrics.widthPixels;
         mHeight = displayMetrics.heightPixels;
+
+        mShadowMappingFBO = new ShadowMappingFBO(mWidth,mHeight,mContext);
+        mShadowMappingTech = new ShadowMappingTechnique(mContext);
     }
 
     @Override
@@ -84,20 +84,22 @@ public class myRenderer23 extends myRenderer {
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
 
         GLES20.glEnable(GLES20.GL_CULL_FACE);
+        GLES20.glCullFace(GLES20.GL_BACK);
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
         mShapeModel.loadBuffers();
         mShapePlane.loadBuffers();
 
+
+        mLighting.setAmbientIntensity(1.0f);
         mLighting.setNumberOfSpotLights(spotLightCount);
         mLighting.addSpotLight(new float[]{1.0f,1.0f,1.0f},new float[]{0.0f,0.9f}
-                ,new float[]{-20.0f,20.0f,5.0f},new float[]{0.0f,0.01f,0.0f}
-                ,new float[]{1.0f,-1.0f,0.0f},20.0f);
+                ,new float[]{-20.0f,10.0f,5.0f},new float[]{0.0f,0.01f,0.0f}
+                ,new float[]{20.0f,0.0f,0.0f},20.0f);
 
 
-        mShadowMappingFBO.init();
+       mShadowMappingFBO.init();
         mShadowMappingTech.init();
-
     }
 
 
@@ -112,7 +114,6 @@ public class myRenderer23 extends myRenderer {
 
     @Override
     public void onDrawFrame(GL10 gl10) {
-
         shadowMapPass();
         renderMapPass();
 
@@ -125,12 +126,13 @@ public class myRenderer23 extends myRenderer {
         TransPipeline pipeLine = new TransPipeline();
 
         pipeLine.setScale(new float[]{0.1f,0.1f,0.1f});
-        pipeLine.setRotate(0,new float[]{0.0f,1.0f,0.0f});
         pipeLine.setTranslate(new float[]{0.0f,0.0f,3.0f});
 
         SpotLight spotLight = mLighting.getSpotLight(0);
         if(spotLight!=null)
             pipeLine.mCamera.setCamera(spotLight.getPosition(),spotLight.getDirection(),new float[]{0.0f,1.0f,0.0f});
+
+
         pipeLine.setPerspective(mWidth,mHeight,60.0f,50.0f,1.0f);
         GLES20.glUniformMatrix4fv(mShadowMappingTech.getMVPHandle(),1,false,pipeLine.getMatrix(false,false,false),0);
         mShapeModel.draw(mShadowMappingTech.getPositionHandle(),-1,-1,mShadowMappingTech.getTextureSamplerHandle(),mShadowMappingTech.getTextureCoordHandle());
@@ -143,7 +145,7 @@ public class myRenderer23 extends myRenderer {
 
         TransPipeline pipeLine = new TransPipeline();
 
-        pipeLine.setScale(new float[]{5.0f,5.0f,5.0f});
+        pipeLine.setScale(new float[]{3.0f,3.0f,3.0f});
         pipeLine.setTranslate(new float[]{0.0f,0.0f,10.0f});
         pipeLine.mCamera.setCamera(new float[]{0.0f,0.0f,0.0f},new float[]{0.0f,0.0f,1.0f},new float[]{0.0f,1.0f,0.0f});
         pipeLine.setPerspective(mWidth,mHeight,60.0f,50.0f,1.0f);
@@ -151,7 +153,7 @@ public class myRenderer23 extends myRenderer {
 
         GLES20.glUniform1i(mShadowMappingTech.getTextureSamplerHandle(),0);
         mShadowMappingFBO.BindForReading(GLES20.GL_TEXTURE0);
-        mShapePlane.draw(mShadowMappingTech.getPositionHandle(),-1,-1,mShadowMappingTech.getTextureSamplerHandle(),mShadowMappingTech.getTextureCoordHandle());
+        mShapePlane.draw(mShadowMappingTech.getPositionHandle(),-1,-1,-1,mShadowMappingTech.getTextureCoordHandle());
     }
 
     public void onDestroy(){

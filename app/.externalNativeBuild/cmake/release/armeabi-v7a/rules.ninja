@@ -42,7 +42,7 @@ rule CXX_SHARED_LIBRARY_LINKER__jassimp
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /home/rohit/Rohit/Android_Studio/android-sdk-linux/cmake/3.6.3155560/bin/cmake -H/home/rohit/Rohit/Android_Projects/OglDevAndroid/app -B/home/rohit/Rohit/Android_Projects/OglDevAndroid/app/.externalNativeBuild/cmake/release/armeabi-v7a
+  command = /home/rohit/Rohit/Android_Studio/android-sdk-linux/cmake/3.6.3155560/bin/cmake -H/home/rohit/Rohit/Android_Projects/OglDevAndroid2/OGLDevAndroid/app -B/home/rohit/Rohit/Android_Projects/OglDevAndroid2/OGLDevAndroid/app/.externalNativeBuild/cmake/release/armeabi-v7a
   description = Re-running CMake...
   generator = 1
 

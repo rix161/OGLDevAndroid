@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.gles.rohit.Common.FileReader;
 import com.gles.rohit.Common.ShaderHelper;
-import com.gles.rohit.Common.Utils;
 import com.gles.rohit.ogldevandroid.R;
 
 /**
@@ -30,8 +29,8 @@ public class ShadowMappingTechnique {
     }
 
     public void init(){
-        mVertexId = ShaderHelper.generateShader(GLES20.GL_VERTEX_SHADER, FileReader.readTextFileFromRawResource(mContext, R.raw.tutorial24_shadow));
-        mFragmentId = ShaderHelper.generateShader(GLES20.GL_FRAGMENT_SHADER,FileReader.readTextFileFromRawResource(mContext,R.raw.tutorial24_shadowfs));
+        mVertexId = ShaderHelper.generateShader(GLES20.GL_VERTEX_SHADER, FileReader.readTextFileFromRawResource(mContext, R.raw.tutorial23_shadow));
+        mFragmentId = ShaderHelper.generateShader(GLES20.GL_FRAGMENT_SHADER,FileReader.readTextFileFromRawResource(mContext,R.raw.tutorial23_shadowfs));
         if(mVertexId==-1 || mFragmentId==-1)
             Log.e("GFX","ShadowMappingTech:Something wrong with shader");
 
